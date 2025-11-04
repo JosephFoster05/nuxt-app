@@ -5,6 +5,8 @@ const { data: users, pending, error, refresh } = await useFetch('/api/users')
 
 </script>
 
+
+
 <template>
   <div>
     <h2>Users</h2>

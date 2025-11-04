@@ -1,4 +1,4 @@
-/* Minimal styles to match the provided template */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -64,7 +64,7 @@ main {
     padding: 16px;
 }
 
-/* responsive tweaks */
+
 @media (min-width: 600px) {
     #hamburgerLinksVisor {
         display: block;

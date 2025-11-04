@@ -12,7 +12,8 @@ export default defineEventHandler(async () => {
     const db = new DB(dbPath)
 
     const rows = await new Promise((resolve, reject) => {
-      db.all('SELECT id, username, email, role, created_at FROM users ORDER BY id DESC', (err, rows) => {
+      // Select only columns that exist in the current schema (id, username, email)
+      db.all('SELECT id, username, email FROM users ORDER BY id DESC', (err, rows) => {
         db.close()
         if (err) return reject(err)
         resolve(rows)
