@@ -48,6 +48,8 @@ if (process.server) {
                 <NuxtLink to="/">Home</NuxtLink>
                 <span>|</span>
                 <NuxtLink to="/dash">Dashboard</NuxtLink>
+                <span>|</span>
+                <NuxtLink to="/add-user">Add User</NuxtLink>
             </nav>
         </header>
 

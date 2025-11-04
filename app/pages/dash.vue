@@ -1,6 +1,21 @@
+<script setup>
+
+const { data: users, pending, error, refresh } = await useFetch('/api/users')
+
+
+</script>
+
 <template>
-    <div class="dash-container">
-        <h1>Dashboard</h1>
-        <p>Welcome to your dashboard!</p>
-    </div>
+  <div>
+    <h2>Users</h2>
+    <div v-if="pending">Loading...</div>
+    <div v-else-if="error">Error: {{ error.message || error }}</div>
+    <ul v-else>
+      <li v-for="user in users" :key="user.id">
+        {{ user.username }} ({{ user.email }})
+      </li>
+    </ul>
+  </div>
+
+
 </template>
