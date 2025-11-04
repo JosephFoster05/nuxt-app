@@ -1,15 +1,26 @@
-
-
-
 <script setup>
+import { useHead } from '#app'
+
+useHead({
+    title: 'SustainWear',
+    meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        { charset: 'utf-8' }
+    ],
+    link: [
+        { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' },
+        { rel: 'stylesheet', href: '/css/style.css' }
+    ],
+    script: [
+        { src: '/js/script.js', body: true }
+    ]
+})
 
 if (process.server) {
     try {
-
         const path = await import('path')
         const sqlite3mod = await import('sqlite3')
         let sqlite3 = sqlite3mod.default ?? sqlite3mod
-
 
         if (typeof sqlite3.verbose === 'function') sqlite3 = sqlite3.verbose()
 
@@ -19,18 +30,18 @@ if (process.server) {
 
         db.serialize(() => {
             db.run(`CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE,
-                password TEXT,
-                email TEXT UNIQUE
-            )`)
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                username TEXT UNIQUE,
+                                password TEXT,
+                                email TEXT UNIQUE
+                        )`)
 
             db.run(`CREATE TABLE IF NOT EXISTS data (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER,
-                info TEXT,
-                FOREIGN KEY(user_id) REFERENCES users(id)
-            )`)
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                user_id INTEGER,
+                                info TEXT,
+                                FOREIGN KEY(user_id) REFERENCES users(id)
+                        )`)
         })
 
         db.close()
@@ -44,17 +55,26 @@ if (process.server) {
 <template>
     <div>
         <header>
-            <nav>
-                <NuxtLink to="/">Home</NuxtLink>
-                <span>|</span>
-                <NuxtLink to="/dash">Dashboard</NuxtLink>
-                <span>|</span>
-                <NuxtLink to="/add-user">Add User</NuxtLink>
-            </nav>
+            <h2>S.W.</h2>
+            <div id="hamburgerIcon">
+                <a href="javascript:void(0);" class="icon" onclick="generateHamburgerLinks()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
         </header>
+        <hr class="divider" />
 
-        <NuxtPage />
+        <div id="hamburgerLinksVisor">
+            <div id="hamburgerLinks">
+                <NuxtLink to="/about-us">About</NuxtLink>
+                <NuxtLink to="/our-impact">Impact</NuxtLink>
+                <NuxtLink to="/register">Register</NuxtLink>
+            </div>
+        </div>
 
+        <main>
+            <NuxtPage />
+        </main>
     </div>
 </template>
 

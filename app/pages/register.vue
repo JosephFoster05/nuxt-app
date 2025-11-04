@@ -37,8 +37,6 @@ const addUser = async () => {
 
 <template>
 
-
-
     <div>
         <h2>Add New User</h2>
         <form @submit.prevent="addUser">

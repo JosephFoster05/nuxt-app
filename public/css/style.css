@@ -1,0 +1,76 @@
+/* Minimal styles to match the provided template */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: #222;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f9f9f9;
+}
+
+header h2 {
+    font-size: 20px;
+    color: #111;
+}
+
+#hamburgerIcon .icon {
+    font-size: 24px;
+    color: #111;
+    text-decoration: none;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 0;
+}
+
+#hamburgerLinksVisor {
+    display: none;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+#hamburgerLinks {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+#hamburgerLinks a {
+    padding: 8px 0;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#hamburgerLinks a:last-child {
+    border-bottom: none;
+}
+
+main {
+    padding: 16px;
+}
+
+/* responsive tweaks */
+@media (min-width: 600px) {
+    #hamburgerLinksVisor {
+        display: block;
+        position: absolute;
+        top: 64px;
+        right: 16px;
+        width: 200px;
+    }
+}
