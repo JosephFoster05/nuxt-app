@@ -2,9 +2,9 @@ import { readBody, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { First_Name, Last_Name, Email, Password, Phone, Role } = body || {}
+  const { First_Name, Last_Name, Email, Password, Phone } = body || {}
 
-  if (!First_Name || !Last_Name || !Email || !Password || !Phone || !Role) {
+  if (!First_Name || !Last_Name || !Email || !Password || !Phone ) {
     throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password, phone are required' })
   }
 
@@ -21,8 +21,8 @@ export default defineEventHandler(async (event) => {
     const result = await new Promise((resolve, reject) => {
 
       db.run(
-        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?, ?)',
-        [First_Name, Last_Name, Email, Password, Phone, Role],
+        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?)',
+        [First_Name, Last_Name, Email, Password, Phone],
         function (err) {
           try { db.close() } catch (_) {}
           if (err) return reject(err)
