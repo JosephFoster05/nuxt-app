@@ -1,5 +1,9 @@
 
+<script setup>
 
+// page needs a lot of work and styling to look like the prototype that we created, this is just a basic layout with some placeholder text and images
+
+</script>
 
 <template>
   <section id="title">

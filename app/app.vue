@@ -26,6 +26,8 @@ try {
     //ignore errors here; user will be null if not logged in
 }
 
+// i believe that once the user auth is fetched and user is logged in they it doesnt have to be called on other pages again. 
+
 const { user, fetchUserData, logout, error } = useAuth()
 
 
@@ -48,7 +50,7 @@ const { user, fetchUserData, logout, error } = useAuth()
             <div id="hamburgerLinks">
                 <NuxtLink to="/about-us">About</NuxtLink>
                 <NuxtLink to="/our-impact">Impact</NuxtLink>
-                <NuxtLink to="/register">Register</NuxtLink>
+                <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
                 <NuxtLink to="/users">Users</NuxtLink>
                 <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
                 <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
