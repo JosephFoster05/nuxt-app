@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const { First_Name, Last_Name, Email, Password, Phone, Role } = body || {}
 
   if (!First_Name || !Last_Name || !Email || !Password || !Phone || !Role) {
-    throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password, phone and role are required' })
+    throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password, phone are required' })
   }
 
   try {
@@ -21,12 +21,12 @@ export default defineEventHandler(async (event) => {
     const result = await new Promise((resolve, reject) => {
 
       db.run(
-        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone, Role) VALUES (?, ?, ?, ?, ?, ?)',
+        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?, ?)',
         [First_Name, Last_Name, Email, Password, Phone, Role],
         function (err) {
           try { db.close() } catch (_) {}
           if (err) return reject(err)
-          resolve({ id: this.lastID, First_Name, Last_Name, Email, Phone, Role })
+          resolve({ id: this.lastID, First_Name, Last_Name, Email, Phone })
         }
       )
     })

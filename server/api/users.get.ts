@@ -12,7 +12,7 @@ export default defineEventHandler(async () => {
     const db = new DB(dbPath)
 
     const rows = await new Promise((resolve, reject) => {
-      db.all('SELECT User_ID, First_Name, Last_Name, Email, Phone, Role FROM User ORDER BY User_ID DESC', (err, rows) => {
+      db.all('SELECT User_ID, First_Name, Last_Name, Email, Phone FROM User ORDER BY User_ID DESC', (err, rows) => {
         db.close()
         if (err) return reject(err)
         resolve(rows)

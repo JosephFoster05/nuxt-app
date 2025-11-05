@@ -7,7 +7,6 @@ const Email = ref('')
 const Password = ref('')
 const Phone = ref('')
 const message = ref('')
-const role = ref('user')  // Default role set to 'user'
 
 
 const addUser = async () => {
@@ -22,8 +21,7 @@ const addUser = async () => {
                 Last_Name: Last_Name.value,
                 Email: Email.value,
                 Password: Password.value,
-                Phone: Phone.value,
-                Role: role.value
+                Phone: Phone.value
             })
         })
 
@@ -32,7 +30,7 @@ const addUser = async () => {
         }
 
         const data = await response.json()
-        message.value = `User added: ${data.First_Name} ${data.Last_Name} (${data.Role})`
+        message.value = `User added: ${data.First_Name} ${data.Last_Name}`
     } catch (error) {
         message.value = `Error: ${error.message}`
     }
