@@ -9,20 +9,24 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const path = await import('path')
-    const sqlite3mod = await import('sqlite3')
+  const path = await import('path')
+  const sqlite3mod = await import('sqlite3')
     let sqlite3 = sqlite3mod.default ?? sqlite3mod
     if (typeof sqlite3.verbose === 'function') sqlite3 = sqlite3.verbose()
 
     const dbPath = path.join(process.cwd(), 'database', 'database.db')
     const DB = sqlite3.Database
     const db = new DB(dbPath)
+    // hash password before storing
+    const bcryptmod = await import('bcryptjs')
+    const bcrypt = bcryptmod.default ?? bcryptmod
+    const hashedPassword = await bcrypt.hash(Password, 10)
 
     const result = await new Promise((resolve, reject) => {
 
       db.run(
         'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?)',
-        [First_Name, Last_Name, Email, Password, Phone],
+        [First_Name, Last_Name, Email, hashedPassword, Phone],
         function (err) {
           try { db.close() } catch (_) {}
           if (err) return reject(err)

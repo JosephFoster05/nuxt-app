@@ -1,12 +1,14 @@
 <script setup>
 
 // check if user is logged in, if not redirect to register page
+import { useAuth } from '../../composables/useAuth'
+import { useRouter } from 'vue-router'
+const { user, fetchUserData, logout, error } = useAuth()
+const router = useRouter()
 
-//examaple usage of useAuth?
-import { useAuth } from '@/composables/useAuth'
-const { isAuthenticated } = useAuth()
-if (!isAuthenticated.value) {
-    navigateTo('/register')
+
+if (!user) {
+    router.push('/register')
 }
 
 

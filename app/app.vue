@@ -16,26 +16,17 @@ useHead({
     ]
 })
 
-// Ensure database and tables exist on server start
-if (process.server) {
-    (async () => {
-        try {
-            const path = await import('path')
-            const sqlite3mod = await import('sqlite3')
-            let sqlite3 = sqlite3mod.default ?? sqlite3mod
+import useAuth from '../composables/useAuth'
 
-            if (typeof sqlite3.verbose === 'function') sqlite3 = sqlite3.verbose()
-            const dbPath = path.join(process.cwd(), 'database', 'database.db')
-            const DB = sqlite3.Database
-            const db = new DB(dbPath)
-
-            db.close()
-            console.log('[app.vue] ensured database tables exist at', dbPath)
-        } catch (err) {
-            console.error('[app.vue] server-side DB setup failed:', err && err.message ? err.message : err)
-        }
-    })()
+try {
+    //fetch user data on app load to set initial auth state
+    const { fetchUserData } = useAuth()
+    await fetchUserData()
+} catch (e) {
+    //ignore errors here; user will be null if not logged in
 }
+
+const { user, fetchUserData, logout, error } = useAuth()
 
 
 </script>
@@ -59,6 +50,10 @@ if (process.server) {
                 <NuxtLink to="/our-impact">Impact</NuxtLink>
                 <NuxtLink to="/register">Register</NuxtLink>
                 <NuxtLink to="/users">Users</NuxtLink>
+                <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
+                <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
+                <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
+                <button v-if="user" @click="logout()">Logout</button>
             </div>
         </div>
 

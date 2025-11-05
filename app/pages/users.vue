@@ -1,5 +1,6 @@
 <script setup>
 // Fetch and display list of users
+
 const { data: users, pending, error, refresh } = await useFetch('/api/users')
 
 </script>
