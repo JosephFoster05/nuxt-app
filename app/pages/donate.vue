@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 const { user, fetchUserData, logout, error } = useAuth()
 const router = useRouter()
 
-
+// redirect if not logged in
 if (!user) {
     router.push('/register')
 }
