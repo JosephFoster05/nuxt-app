@@ -50,6 +50,7 @@ if (process.server) {
                 </a>
             </div>
         </header>
+
         <hr class="divider" />
 
         <div id="hamburgerLinksVisor">
