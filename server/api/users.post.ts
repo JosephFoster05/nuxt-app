@@ -2,10 +2,10 @@ import { readBody, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { First_Name, Last_Name, Email, Password, Phone } = body || {}
+  const { First_Name, Last_Name, Email, Password, Phone, Role } = body || {}
 
-  if (!First_Name || !Last_Name || !Email || !Password || !Phone) {
-    throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password and phone are required' })
+  if (!First_Name || !Last_Name || !Email || !Password || !Phone || !Role) {
+    throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password, phone and role are required' })
   }
 
   try {
@@ -19,15 +19,14 @@ export default defineEventHandler(async (event) => {
     const db = new DB(dbPath)
 
     const result = await new Promise((resolve, reject) => {
-      // Use db.run directly and close DB in the callback to ensure the handle
-      // is released after the write completes.
+
       db.run(
-        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?)',
-        [First_Name, Last_Name, Email, Password, Phone],
+        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone, Role) VALUES (?, ?, ?, ?, ?, ?)',
+        [First_Name, Last_Name, Email, Password, Phone, Role],
         function (err) {
           try { db.close() } catch (_) {}
           if (err) return reject(err)
-          resolve({ id: this.lastID, First_Name, Last_Name, Email })
+          resolve({ id: this.lastID, First_Name, Last_Name, Email, Phone, Role })
         }
       )
     })
