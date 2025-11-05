@@ -29,22 +29,6 @@ if (process.server) {
             const DB = sqlite3.Database
             const db = new DB(dbPath)
 
-            db.serialize(() => {
-                db.run(`CREATE TABLE IF NOT EXISTS users (
-                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    username TEXT UNIQUE,
-                                    password TEXT,
-                                    email TEXT UNIQUE
-                            )`)
-
-                db.run(`CREATE TABLE IF NOT EXISTS data (
-                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    user_id INTEGER,
-                                    info TEXT,
-                                    FOREIGN KEY(user_id) REFERENCES users(id)
-                            )`)
-            })
-
             db.close()
             console.log('[app.vue] ensured database tables exist at', dbPath)
         } catch (err) {

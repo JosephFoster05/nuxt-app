@@ -2,10 +2,10 @@ import { readBody, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { username, email, password } = body || {}
+  const { First_Name, Last_Name, Email, Password, Phone } = body || {}
 
-  if (!username || !email) {
-    throw createError({ statusCode: 400, statusMessage: 'username and email are required' })
+  if (!First_Name || !Last_Name || !Email || !Password || !Phone) {
+    throw createError({ statusCode: 400, statusMessage: 'first name, last name, email, password and phone are required' })
   }
 
   try {
@@ -19,17 +19,21 @@ export default defineEventHandler(async (event) => {
     const db = new DB(dbPath)
 
     const result = await new Promise((resolve, reject) => {
-      const stmt = db.prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)')
-      stmt.run([username, email, password], function (err) {
-        db.close()
-        if (err) return reject(err)
-        resolve({ id: this.lastID, username, email })
-      })
+      // Use db.run directly and close DB in the callback to ensure the handle
+      // is released after the write completes.
+      db.run(
+        'INSERT INTO User (First_Name, Last_Name, Email, Password, Phone) VALUES (?, ?, ?, ?, ?)',
+        [First_Name, Last_Name, Email, Password, Phone],
+        function (err) {
+          try { db.close() } catch (_) {}
+          if (err) return reject(err)
+          resolve({ id: this.lastID, First_Name, Last_Name, Email })
+        }
+      )
     })
 
     return result
   } catch (err: any) {
-    // handle unique constraint errors from sqlite
     const msg = String(err?.message || err)
     if (msg.includes('UNIQUE') || msg.includes('constraint')) {
       throw createError({ statusCode: 409, statusMessage: msg })
