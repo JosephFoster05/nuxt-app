@@ -16,6 +16,7 @@ useHead({
     ]
 })
 
+// Ensure database and tables exist on server start
 if (process.server) {
     (async () => {
         try {
@@ -24,7 +25,6 @@ if (process.server) {
             let sqlite3 = sqlite3mod.default ?? sqlite3mod
 
             if (typeof sqlite3.verbose === 'function') sqlite3 = sqlite3.verbose()
-
             const dbPath = path.join(process.cwd(), 'database', 'database.db')
             const DB = sqlite3.Database
             const db = new DB(dbPath)

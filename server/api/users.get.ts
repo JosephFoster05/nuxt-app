@@ -10,7 +10,7 @@ export default defineEventHandler(async () => {
     const dbPath = path.join(process.cwd(), 'database', 'database.db')
     const DB = sqlite3.Database
     const db = new DB(dbPath)
-
+  
     const rows = await new Promise((resolve, reject) => {
       db.all('SELECT User_ID, First_Name, Last_Name, Email, Phone FROM User ORDER BY User_ID DESC', (err, rows) => {
         db.close()
