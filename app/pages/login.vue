@@ -19,16 +19,19 @@ const router = useRouter()
 const { fetchUserData } = useAuth()
 
 const loginUser = async () => {
+
     message.value = ''
+
     try {
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ Email: Email.value, Password: Password.value })
         })
+
         if (!res.ok) {
             const text = await res.text()
-            message.value = `Login failed: ${res.status} ${text}`
+            message.value = `Login failed ultimately: ${res.status} ${text}`
             return
         }
 
