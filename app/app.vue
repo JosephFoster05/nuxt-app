@@ -52,6 +52,7 @@ const { user, fetchUserData, logout, error } = useAuth()
                 <NuxtLink to="/our-impact">Impact</NuxtLink>
                 <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
                 <NuxtLink to="/users">Users</NuxtLink>
+                <NuxtLink to="/remove-user">Remove User</NuxtLink>
                 <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
                 <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
                 <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>

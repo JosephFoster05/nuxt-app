@@ -24,6 +24,8 @@ onMounted(() => {
   fetchDonations();
 });
 
+
+
 const doLogout = async () => {
   await logout();
   router.push("/login");
