@@ -19,6 +19,8 @@ const {
   error: donationsError,
 } = useDonations();
 
+
+// for debugging purposes
 console.log("Donations in Our Impact page:", donations);
 
 

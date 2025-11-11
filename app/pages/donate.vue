@@ -1,33 +1,98 @@
-<script setup>
-
-// check if user is logged in, if not redirect to register page
-import { useAuth } from '../../composables/useAuth'
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-const { user, fetchUserData, logout, error } = useAuth()
+import useAuth from '../../composables/useAuth'
+import { useDonations } from '../../composables/useDonations'
+
+// auth + donations composables
+const { user, fetchUserData } = useAuth()
+const { donations, fetchDonations, addDonation, loading: donationsLoading, error: donationsError } = useDonations()
+
+// form state
+const clothingType = ref('')
+const quantity = ref<number | null>(null)
+const condition = ref('gently_used')
+const gender = ref('other')
+const message = ref('')
+
+const filteredDonations = computed(() => {
+    const u = user.value
+    if (!u || !donations.value) return []
+    return donations.value.filter((d) => Number(d.user_id) === Number(u.User_ID))
+})
+
 const router = useRouter()
 
-// redirect if not logged in 
+onMounted(async () => {
+    await fetchUserData()
+    if (!user.value) {
+        router.push('/register')
+        return
+    }
+    await fetchDonations()
+})
 
-if (!user) {
-    router.push('/register')
+const donationsSubmit = async () => {
+    try {
+        message.value = ''
+        const payload = {
+            user_id: user.value?.User_ID,
+            clothing_name: clothingType.value,
+            donation_size: quantity.value != null ? String(quantity.value) : null,
+            donation_quality: condition.value,
+            donation_gender: gender.value,
+            donation_status: 'pending'
+        }
+
+        // use composable helper which posts to /api/donations and updates local state
+        const created = await addDonation(payload)
+        message.value = `Donation submitted (id ${created.donation_id}). Thank you!`
+
+        // reset form
+        clothingType.value = ''
+        quantity.value = null
+        condition.value = 'gently_used'
+        gender.value = 'other'
+    } catch (err: any) {
+        message.value = `Error: ${err?.message ?? String(err)}`
+    }
 }
-
-
-
-
-// on this page logged in users can donate clothing to the organization
-// for now this is just a placeholder page
-// future implementation will include a form to schedule a pickup or drop-off? donations etc.
-
-
 </script>
 
 <template>
     <div>
         <h2>Donate Page</h2>
         <p>This is the donate page. More features coming soon!</p>
+
+        <form @submit.prevent="donationsSubmit()">
+            <div>
+                <label for="clothingType">Type of Clothing:</label>
+                <input id="clothingType" type="text" v-model="clothingType" required />
+            </div>
+            <div>
+                <label for="quantity">Quantity:</label>
+                <input id="quantity" type="number" v-model.number="quantity" required />
+            </div>
+            <div>
+                <label for="condition">Condition:</label>
+                <select id="condition" v-model="condition" required>
+                    <option value="new">New</option>
+                    <option value="gently_used">Gently Used</option>
+                    <option value="worn">Worn</option>
+                </select>
+            </div>
+            <div>
+                <label for="gender">Gender:</label>
+                <select id="gender" v-model="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <button type="submit">Submit Donation</button>
+        </form>
+
+        <p v-if="message">{{ message }}</p>
+
     </div>
-
-
-    
 </template>

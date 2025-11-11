@@ -18,6 +18,9 @@ export default defineEventHandler(async (event) => {
     const DB = sqlite3.Database
     const db = new DB(dbPath)
 
+
+
+
     // find user
     const row: any = await new Promise((resolve, reject) => {
       db.get('SELECT User_ID, Email FROM User WHERE Email = ?', [Email], (err, row) => {
@@ -26,10 +29,15 @@ export default defineEventHandler(async (event) => {
       })
     })
 
+
+
     if (!row) {
       try { db.close() } catch (_) {}
       throw createError({ statusCode: 404, statusMessage: 'User not found' })
     }
+
+
+
 
     const userId = row.User_ID
 
@@ -42,15 +50,19 @@ export default defineEventHandler(async (event) => {
       })
     })
 
+
+
     const changes = (result as any).changes || 0
     if (changes === 0) {
       throw createError({ statusCode: 500, statusMessage: 'Failed to delete user' })
     }
 
+
+
     return { success: true, Email }
   } catch (err: any) {
     const msg = String(err?.message || err)
-    // if foreign key constraint prevents delete, return a helpful message
+    // if FK constraint prevents delete, return a message ie donations exist for this user
     if (msg.includes('FOREIGN KEY') || msg.includes('constraint')) {
       throw createError({ statusCode: 409, statusMessage: 'Cannot delete user: referenced by other records' })
     }
