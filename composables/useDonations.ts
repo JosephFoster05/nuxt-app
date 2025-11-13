@@ -50,6 +50,25 @@ export function useDonations() {
         }
     }
 
+
+
+    // update donation status helpers here
+
+    const updateDonationStatus = async (donation_id: number, donation_status: string) => {
+        try {
+            const res = await axios.patch('/api/donations', { donation_id, donation_status })
+            const updated: Donation = res.data
+            donations.value = donations.value.map(d => d.donation_id === updated.donation_id ? updated : d)
+            return updated
+        } catch (err: any) {
+            // error handling for if this goes wrong. although this should NEVER happen
+            const serverMsg = err?.response?.data?.statusMessage || err?.response?.data || err?.message
+            error.value = typeof serverMsg === 'string' ? serverMsg : String(serverMsg)
+            throw new Error(String(error.value))
+        }
+    }
+    
+
     return {
         donations,
         error,
@@ -57,5 +76,6 @@ export function useDonations() {
         fetchDonations,
         addDonation,
         deleteDonation
+        , updateDonationStatus
     }
 }

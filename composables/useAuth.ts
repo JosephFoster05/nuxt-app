@@ -13,7 +13,6 @@ export async function fetchUserData() {
   try {
     const res = await fetch('/api/current-user')
     if (!res.ok) {
-      // 401 or other error = no user
       user.value = null
       return null
     }
@@ -34,7 +33,6 @@ export async function logout() {
   try {
     await fetch('/api/logout', { method: 'POST' })
   } catch (err) {
-    // ignore network errors
   }
 
   try { localStorage.removeItem('user') } catch (_) {}
@@ -42,7 +40,6 @@ export async function logout() {
 }
 
 export function useAuth() {
-  // provide both logout and fetchUserData methods along with state to use in app
   return { user, loading, error, fetchUserData, logout }
 }
 
