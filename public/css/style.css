@@ -1,5 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* tried to get it close to how it looked in prototype some elements need fixing abit but had issues with them not doing what
+   i wanted to so left it for now but its close enough for noow
+*/
 
 * {
     box-sizing: border-box;
@@ -7,130 +10,543 @@
     padding: 0;
 }
 
-body {
-    margin: 10px;
+html {
+    scroll-behavior: smooth; /* enable smooth scrolling looks goods */
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-    align-items: center;
+body {
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+    color: #2C2825;
+    background-color: #fafafa;
+    padding: 0.75rem;
 }
 
 h1 {
     font-family: 'Caprasimo', cursive;
-    font-size: 3em;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
     color: #2C2825;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-    margin-bottom: 20px;
-    margin-top: 10px;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 h2 {
     font-family: 'Caprasimo', cursive;
-    font-size: 2.4em;
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
     color: #2C2825;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-#hamburgerIcon {
-    display: flex;
-    align-items: center;
-}
-
-#hamburgerIcon .fa-bars {
-    color: #2C2825;
-    font-size: 34px;
-    cursor: pointer;
-}
-
-#hamburgerLinksVisor {
-    display: none;
-    position: absolute;
-    top: 64px;
-    right: 16px;
-    background: #ffffff;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    border-radius: 8px;
-    z-index: 1200;
-    min-width: 200px;
-}
-
-#hamburgerLinks {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px;
-}
-
-a {
-    text-decoration: none;
-    font-family: 'Outfit', sans-serif;
-    color: #2C2825;
-}
-
-.divider {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#title img {
-    width: 100%;
-    border-radius: 10px;
-    height: 400px;
-}
-
-#variableStatistic img {
-    width: 100%;
-    border-radius: 10px;
-    height: 550px;
+    margin-bottom: 1rem;
 }
 
 h3 {
     font-family: 'Outfit', sans-serif;
     color: #2C2825;
     text-align: center;
-    font-size: 27px;
-}
-
-#mainIntroduction,
-#variableStatistic {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-#seperator {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#infoBox {
-    margin-top: 20px;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
 }
 
 p {
     font-family: 'Outfit', sans-serif;
     color: #2C2825;
     text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
-@media screen and (min-width: 768px) {}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    margin-bottom: 1rem;
+}
+
+header h2 {
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+header h2 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header h2 a:hover {
+    color: #4a4a4a;
+}
+
+#hamburgerIcon {
+    display: flex;
+    align-items: center;
+    z-index: 1300;
+}
+
+#hamburgerIcon .fa-bars {
+    color: #2C2825;
+    font-size: 1.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#hamburgerIcon .fa-bars:hover {
+    background-color: rgba(44, 40, 37, 0.1);
+    transform: scale(1.1);
+}
+
+#hamburgerLinksVisor {
+    display: none;
+    position: absolute;
+    top: 4rem;
+    right: 0.75rem;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 0.75rem;
+    z-index: 1200;
+    min-width: 220px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#hamburgerLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+
+#hamburgerLinks a,
+#hamburgerLinks button {
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    color: #2C2825;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+#hamburgerLinks a:hover,
+#hamburgerLinks button:hover {
+    background-color: rgba(44, 40, 37, 0.08);
+    transform: translateX(0.25rem);
+}
+
+.divider {
+    margin: 1.5rem 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(44, 40, 37, 0.2), transparent);
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+#title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+#title img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0.75rem;
+    height: clamp(200px, 40vw, 350px);
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+#mainIntroduction,
+#variableStatistic {
+    padding: 1.5rem 0;
+}
+
+.infoBox,
+#infoBox {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin: 1.5rem 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#variableStatistic img {
+    width: 100%;
+    border-radius: 0.75rem;
+    height: clamp(250px, 50vw, 400px);
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+#seperator {
+    margin: 1.5rem 0;
+}
+
+form {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin: 1rem 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+form div {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2C2825;
+    font-size: 0.9rem;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.875rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2C2825;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(44, 40, 37, 0.1);
+}
+
+button[type="submit"],
+button {
+    background: #2C2825;
+    color: #ffffff;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+button[type="submit"]:hover,
+button:hover {
+    background: #1a1715;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 40, 37, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin: 1rem 0;
+}
+
+th,
+td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.85rem;
+}
+
+th {
+    background: #2C2825;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+tr:hover {
+    background: rgba(44, 40, 37, 0.03);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #ffffff;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+li strong {
+    color: #2C2825;
+    font-weight: 600;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.image-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.caption {
+    margin-top: 0.75rem;
+    font-style: italic;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+a {
+    color: #2C2825;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4a4a4a;
+    text-decoration: underline;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.p-1 { padding: 1rem; }
+.p-2 { padding: 2rem; }
+
+@media (min-width: 576px) {
+    body {
+        padding: 1rem;
+    }
+    
+    form {
+        padding: 2rem;
+    }
+    
+    button[type="submit"],
+    button {
+        width: auto;
+        display: inline-block;
+    }
+    
+    table {
+        font-size: inherit;
+    }
+    
+    th, td {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+}
 
 @media (min-width: 768px) {
+    body {
+        padding: 1.5rem;
+    }
+    
+    header {
+        padding: 1rem 0;
+    }
+    
+    #hamburgerIcon {
+        display: none;
+    }
+    
     #hamburgerLinksVisor {
         display: block !important;
         position: static;
-        box-shadow: none;
         background: transparent;
+        box-shadow: none;
         min-width: auto;
+        border: none;
     }
+    
     #hamburgerLinks {
         flex-direction: row;
-        gap: 16px;
+        gap: 1rem;
         padding: 0;
-        margin: 0 8px;
+        margin: 0;
     }
-    #hamburgerIcon { display: none; }
+    
+    #hamburgerLinks a,
+    #hamburgerLinks button {
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        background: rgba(44, 40, 37, 0.05);
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    #hamburgerLinks a:hover,
+    #hamburgerLinks button:hover {
+        background: rgba(44, 40, 37, 0.15);
+        transform: translateY(-2px);
+    }
+    
+    #title img {
+        height: clamp(300px, 35vw, 450px);
+    }
+    
+    #variableStatistic img {
+        height: clamp(350px, 40vw, 500px);
+    }
+    
+    .infoBox,
+    #infoBox {
+        padding: 2rem;
+    }
+    
+    section {
+        margin-bottom: 3rem;
+    }
+    
+    th, td {
+        font-size: 1rem;
+        padding: 1.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    body {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    #mainIntroduction {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+    
+    #seperator {
+        width: 2px;
+        height: 200px;
+        background: linear-gradient(to bottom, transparent, rgba(44, 40, 37, 0.3), transparent);
+        margin: 0;
+        align-self: center;
+    }
+    
+    .infoBox {
+        margin: 0;
+    }
+    
+    form {
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+    
+    table {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        padding: 3rem;
+        max-width: 1400px;
+    }
+    
+    #hamburgerLinks {
+        gap: 1.5rem;
+    }
+    
+    #hamburgerLinks a,
+    #hamburgerLinks button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    #title img {
+        height: clamp(400px, 30vw, 500px);
+    }
+    
+    #variableStatistic img {
+        height: clamp(450px, 35vw, 600px);
+    }
+    
+    .infoBox,
+    #infoBox {
+        padding: 2.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    body {
+        background: #ffffff;
+    }
+    
+    .infoBox,
+    #infoBox,
+    form,
+    table,
+    li {
+        border: 2px solid #000000;
+    }
 }
