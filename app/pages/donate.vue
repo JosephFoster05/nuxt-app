@@ -13,6 +13,7 @@ const clothingType = ref('')
 const quantity = ref<number | null>(null)
 const condition = ref('gently_used')
 const gender = ref('other')
+const size = ref('medium')
 const message = ref('')
 
 const filteredDonations = computed(() => {
@@ -38,9 +39,9 @@ const donationsSubmit = async () => {
         const payload = {
             user_id: user.value?.User_ID,
             clothing_name: clothingType.value,
-            donation_size: quantity.value != null ? String(quantity.value) : null,
             donation_quality: condition.value,
             donation_gender: gender.value,
+            donation_size: size.value,
             donation_status: 'pending'
         }
 
@@ -87,6 +88,14 @@ const donationsSubmit = async () => {
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label for="size">Size:</label>
+                <select id="size" v-model="size" required>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
                 </select>
             </div>
             <button type="submit">Submit Donation</button>
