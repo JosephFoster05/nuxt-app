@@ -361,6 +361,43 @@ a:hover {
 .p-1 { padding: 1rem; }
 .p-2 { padding: 2rem; }
 
+/* styling for the cards on the catalog (might need a change if have images) */
+#catalog-cards-section {
+    padding: 20px;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.catalog-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease; /* lifts up the card box slightly when hover so easier to see when mouse over one */
+    border: 1px solid #eaeaea;
+}
+
+.catalog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.catalog-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.catalog-card p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
 @media (min-width: 576px) {
     body {
         padding: 1rem;

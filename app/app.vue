@@ -110,6 +110,7 @@ onMounted(() => {
         <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
         <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
         <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
+        <NuxtLink to="/catalog">Catalog</NuxtLink>
         <button v-if="user" @click="handleLogout()">Logout</button>
       </div>
     </div>
