@@ -19,6 +19,13 @@ console.log("Donations in Our Impact page:", donations);
 
 const router = useRouter();
 
+
+// i think we should only show approved donations in catalog? rather than all of them
+const filteredDonationsApproved = computed(() => {
+  if (!donations?.value) return [];
+  return donations.value.filter((d) => d.donation_status === 'approved');
+});
+
 onMounted(() => {
   fetchDonations();
 });
@@ -39,7 +46,7 @@ onMounted(() => {
 
         <!-- display all donations as cards (could add filtering in future)-->
         <div v-else class="catalog-grid">
-            <div v-for="item in donations" :key="item.donation_id" class="catalog-card">
+            <div v-for="item in filteredDonationsApproved" :key="item.donation_id" class="catalog-card">
                 <h3>{{ item.clothing_name }}</h3>
                 <p>Status: {{ item.donation_status }}</p>
                 <p>Size: {{ item.donation_size ?? "-" }}</p>
