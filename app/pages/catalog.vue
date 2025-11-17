@@ -1,11 +1,5 @@
 <script setup>
-// we can add content later for now this is just a placeholder page
-// we can add stats, images, testimonials, etc. about the impact of the organization here
-
-// in the stats section we can fetch some data from an api endpoint in the future if needed
-// for now we will just hardcode some stats?
-
-
+// took this section from other page just because i needed same info
 
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
@@ -23,13 +17,11 @@ const {
 // for debugging purposes
 console.log("Donations in Our Impact page:", donations);
 
-
 const router = useRouter();
 
 onMounted(() => {
   fetchDonations();
 });
-
 
 </script>
 
@@ -45,6 +37,7 @@ onMounted(() => {
             No donations available.
         </div>
 
+        <!-- display all donations as cards (could add filtering in future)-->
         <div v-else class="catalog-grid">
             <div v-for="item in donations" :key="item.donation_id" class="catalog-card">
                 <h3>{{ item.clothing_name }}</h3>
@@ -55,10 +48,5 @@ onMounted(() => {
             </div>
         </div>
     </section>
-    
-    
-
-
-
 
 </template>
