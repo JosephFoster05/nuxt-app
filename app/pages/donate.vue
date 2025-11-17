@@ -99,7 +99,11 @@ const donationsSubmit = async () => {
                 </select>
             </div>
             <button type="submit">Submit Donation</button>
+            <br />
+            <button type="reset">Reset</button>
         </form>
+
+        <button @click="router.push('/catalog')">Go to Catalog</button>
 
         <p v-if="message">{{ message }}</p>
 
