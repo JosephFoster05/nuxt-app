@@ -34,6 +34,16 @@ const filteredDonations = computed(() => {
   return donations.value.filter((d) => d.donation_status === 'pending');
 })
 
+const filteredDonationsDenied = computed(() => {
+  if (!donations?.value) return [];
+  return donations.value.filter((d) => d.donation_status === 'declined');
+})
+
+const filteredDonationsAccepted = computed(() => {
+  if (!donations?.value) return [];
+  return donations.value.filter((d) => d.donation_status === 'approved');
+})
+
 
 // Approve or deny donation handlers
 const approve = async (d) => {
@@ -70,13 +80,15 @@ const deny = async (d) => {
   </div>
 
 <section>
-      <h3>Donations</h3>
+      <h3>Donations pending</h3>
       <div v-if="donationsLoading">Loading donations…</div>
       <div v-else-if="donationsError">Error: {{ donationsError }}</div>
       <div v-else-if="filteredDonations && filteredDonations.length === 0">
         No donations.
       </div>
 
+
+      <!--donations table-->
       <table v-else class="donations-table" border="1" cellpadding="6">
         <thead>
           <tr>
@@ -102,6 +114,90 @@ const deny = async (d) => {
             <td>
               <button @click="approve(d)" :disabled="processing[d.donation_id]">Approve</button>
               <button @click="deny(d)" :disabled="processing[d.donation_id]" style="margin-left:8px">Deny</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+
+
+    <section>
+      <h3>Past denied donations</h3>
+      <div v-if="donationsLoading">Loading donations…</div>
+      <div v-else-if="donationsError">Error: {{ donationsError }}</div>
+      <div v-else-if="filteredDonationsDenied && filteredDonationsDenied.length === 0">
+        No denied donations.
+      </div>
+
+
+      <!--donations denied table-->
+      <table v-else class="donations-table" border="1" cellpadding="6">
+        <thead>
+          <tr>
+            <th>Donation ID</th>
+            <th>User ID</th>
+            <th>Clothing Name</th>
+            <th>Status</th>
+            <th>Size</th>
+            <th>Quality</th>
+            <th>Gender</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="d in filteredDonationsDenied" :key="d.donation_id">
+            <td>{{ d.donation_id }}</td>
+            <td>{{ d.user_id }}</td>
+            <td>{{ d.clothing_name }}</td>
+            <td>{{ d.donation_status }}</td>
+            <td>{{ d.donation_size ?? "-" }}</td>
+            <td>{{ d.donation_quality ?? "-" }}</td>
+            <td>{{ d.donation_gender ?? "-" }}</td>
+            <td>
+              <button @click="approve(d)" :disabled="processing[d.donation_id]">Approve</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+
+
+    <section>
+      <h3>Past accepted donations</h3>
+      <div v-if="donationsLoading">Loading donations…</div>
+      <div v-else-if="donationsError">Error: {{ donationsError }}</div>
+      <div v-else-if="filteredDonationsAccepted && filteredDonationsAccepted.length === 0">
+        No accepted donations.
+      </div>
+
+
+      <!--donations accepted table-->
+      <table v-else class="donations-table" border="1" cellpadding="6">
+        <thead>
+          <tr>
+            <th>Donation ID</th>
+            <th>User ID</th>
+            <th>Clothing Name</th>
+            <th>Status</th>
+            <th>Size</th>
+            <th>Quality</th>
+            <th>Gender</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="d in filteredDonationsAccepted" :key="d.donation_id">
+            <td>{{ d.donation_id }}</td>
+            <td>{{ d.user_id }}</td>
+            <td>{{ d.clothing_name }}</td>
+            <td>{{ d.donation_status }}</td>
+            <td>{{ d.donation_size ?? "-" }}</td>
+            <td>{{ d.donation_quality ?? "-" }}</td>
+            <td>{{ d.donation_gender ?? "-" }}</td>
+            <td>
+              <button @click="deny(d)" :disabled="processing[d.donation_id]">Deny</button>
             </td>
           </tr>
         </tbody>
