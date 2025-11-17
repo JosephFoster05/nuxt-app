@@ -52,6 +52,18 @@ const doLogout = async () => {
 
     <hr />
 
+    <section id="stats">
+        <h3>Personal Statistics</h3>
+        <!-- Assuming an average CO2e savings of 6kg per donated clothing item and only accepted ones and for this user only -->
+        <ul>
+            <li>Total Clothing items donated: {{ filteredDonations ? filteredDonations.length : 0 }}+</li>
+            <li>Estimated CO2e savings: {{ (filteredDonations ? filteredDonations.filter(d => d.donation_status === 'approved').length : 0) * 6  }}kg</li>
+            <p style="color: red;">co2e savings will only show approved donations!</p> 
+        </ul>
+
+    </section>
+
+
     <section>
       <h3>Donations</h3>
 

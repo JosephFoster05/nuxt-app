@@ -50,7 +50,8 @@ onMounted(() => {
         <ul>
             <li>Clothing items donated: {{ donations ? donations.length : 0 }}+</li>
             <li>People helped: {{ dummyStats.peopleHelped }}+</li>
-            <li>Communities served: {{ dummyStats.communitiesServed }}+</li>
+            <!-- Assuming an average CO2e savings of 6kg per donated clothing item and only accepted ones -->
+            <li>Estimated CO2e savings: {{ (donations ? donations.filter(d => d.donation_status === 'approved').length : 0) * 6  }}kg</li>
         </ul>
     </section>
 
@@ -60,6 +61,10 @@ onMounted(() => {
         <div v-else-if="donationsError">Error: {{ donationsError }}</div>
         <div v-else>
             <p>Total Donations Recorded: {{ donations ? donations.length : 0 }}</p>
+
+            <!-- donations that have been approved filter to count them -->
+            <p>Accepted Donations: {{ donations ? donations.filter(d => d.donation_status === 'approved').length : 0 }}</p>
+
             <!-- Future implementation: Add charts/graphs to visualize donation trends -->
         </div>
     </section>
