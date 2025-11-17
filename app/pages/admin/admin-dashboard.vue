@@ -9,6 +9,12 @@ const { user, fetchUserData, logout, error: authError } = useAuth();
 
 
 onMounted(() => {
+  try {
+    if (!user.value || !user.value.is_admin) {
+      router.push("/login");
+      return;
+    }
+  } catch (_) {}
   fetchUserData();
 });
 

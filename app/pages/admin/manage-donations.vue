@@ -19,6 +19,12 @@ const processing = ref({})
 const setProcessing = (id, v) => { processing.value = { ...processing.value, [id]: v } }
 
 onMounted(() => {
+  try {
+    if (!user.value || !user.value.is_admin) {
+      router.push("/login");
+      return;
+    }
+  } catch (_) {}
   fetchUserData();
   fetchDonations();
 });
