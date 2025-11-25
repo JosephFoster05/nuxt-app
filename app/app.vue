@@ -23,8 +23,8 @@ import useAuth from "../composables/useAuth";
 
 try {
   //fetch user data on app load to set initial auth state
-  const { fetchUserData } = useAuth();
-  await fetchUserData();
+  //const { fetchUserData } = useAuth();
+  //await fetchUserData();
 } catch (e) {
   //ignore errors here; user will be null if not logged in
 }
@@ -111,6 +111,7 @@ onMounted(() => {
         <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
         <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
         <NuxtLink to="/catalog">Catalog</NuxtLink>
+        <NuxtLink v-if="user" to="/profile">Profile</NuxtLink>
         <button v-if="user" @click="handleLogout()">Logout</button>
       </div>
     </div>
