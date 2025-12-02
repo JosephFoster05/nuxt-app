@@ -83,7 +83,7 @@ onMounted(() => {
 <template>
   <div>
     <header>
-      <h2><NuxtLink to="/">S.W</NuxtLink></h2>
+      <h2 style="font-size: 50px"><NuxtLink to="/">S.W</NuxtLink></h2>
       <div id="hamburgerIcon">
         <a
           href="javascript:void(0);"
@@ -93,27 +93,26 @@ onMounted(() => {
           <i class="fa fa-bars"></i>
         </a>
       </div>
+      <div id="hamburgerLinksVisor">
+        <div id="hamburgerLinks">
+          <NuxtLink to="/about-us">About</NuxtLink>
+          <NuxtLink to="/our-impact">Impact</NuxtLink>
+          <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
+          <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
+            >Admin Dashboard</NuxtLink
+          >
+          <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
+          <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
+          <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
+          <NuxtLink to="/catalog">Catalog</NuxtLink>
+          <button v-if="user" @click="handleLogout()">Logout</button>
+        </div>
+      </div>
     </header>
 
     <hr class="divider" />
 
     <div v-if="toast" class="app-toast">{{ toast }}</div>
-
-    <div id="hamburgerLinksVisor">
-      <div id="hamburgerLinks">
-        <NuxtLink to="/about-us">About</NuxtLink>
-        <NuxtLink to="/our-impact">Impact</NuxtLink>
-        <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
-        <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
-          >Admin Dashboard</NuxtLink
-        >
-        <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
-        <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
-        <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
-        <NuxtLink to="/catalog">Catalog</NuxtLink>
-        <button v-if="user" @click="handleLogout()">Logout</button>
-      </div>
-    </div>
 
     <transition name="fade">
       <div v-if="showLogoutSuccess" class="app-modal-overlay">
