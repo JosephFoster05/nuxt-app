@@ -23,8 +23,8 @@ import useAuth from "../composables/useAuth";
 
 try {
   //fetch user data on app load to set initial auth state
-  const { fetchUserData } = useAuth();
-  await fetchUserData();
+  //const { fetchUserData } = useAuth();
+  //await fetchUserData();
 } catch (e) {
   //ignore errors here; user will be null if not logged in
 }

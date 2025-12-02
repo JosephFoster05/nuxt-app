@@ -9,7 +9,8 @@ const { user, fetchUserData } = useAuth()
 const { donations, fetchDonations, addDonation, loading: donationsLoading, error: donationsError } = useDonations()
 
 // form state
-const clothingType = ref('')
+const selectedClothing = ref('t-shirt')
+const customClothing = ref('')
 const quantity = ref<number | null>(null)
 const condition = ref('gently_used')
 const gender = ref('other')
@@ -36,9 +37,11 @@ onMounted(async () => {
 const donationsSubmit = async () => {
     try {
         message.value = ''
+        const clothingName = selectedClothing.value === 'other' ? customClothing.value : selectedClothing.value
+
         const payload = {
             user_id: user.value?.User_ID,
-            clothing_name: clothingType.value,
+            clothing_name: clothingName,
             donation_quality: condition.value,
             donation_gender: gender.value,
             donation_size: size.value,
@@ -50,7 +53,8 @@ const donationsSubmit = async () => {
         message.value = `Donation submitted (id ${created.donation_id}). Thank you!`
 
         // reset form
-        clothingType.value = ''
+        selectedClothing.value = 't-shirt'
+        customClothing.value = ''
         quantity.value = null
         condition.value = 'gently_used'
         gender.value = 'other'
@@ -67,8 +71,18 @@ const donationsSubmit = async () => {
 
         <form @submit.prevent="donationsSubmit()">
             <div>
-                <label for="clothingType">Type of Clothing:</label>
-                <input id="clothingType" type="text" v-model="clothingType" required />
+                <label for="clothingTypeSelect">Type of clothing:</label>
+                <select id="clothingTypeSelect" v-model="selectedClothing" required>
+                    <option value="t-shirt">T-Shirt</option>
+                    <option value="jacket">Jacket</option>
+                    <option value="pants">Pants</option>
+                    <option value="dress">Dress</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div v-if="selectedClothing === 'other'">
+                <label for="customClothing">Type of Clothing:</label>
+                <input id="customClothing" type="text" v-model="customClothing" required />
             </div>
             <div>
                 <label for="quantity">Quantity:</label>
