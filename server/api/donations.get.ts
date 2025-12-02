@@ -13,7 +13,7 @@ export default defineEventHandler(async () => {
 
     const rows = await new Promise((resolve, reject) => {
       db.all(
-        'SELECT donation_id, user_id, clothing_name, donation_status, donation_size, donation_quality, donation_gender FROM donations ORDER BY donation_id DESC',
+        'SELECT donation_id, user_id, clothing_name, donation_status, donation_size, donation_quality, donation_gender, image_url FROM donations ORDER BY donation_id DESC',
         (err, rows) => {
           try { db.close() } catch (_) {}
           if (err) return reject(err)

@@ -9,6 +9,7 @@ export interface Donation {
     donation_size: string | null
     donation_quality: string | null
     donation_gender: string | null
+    image_url?: string | null
 }
 
 export function useDonations() {
@@ -29,7 +30,7 @@ export function useDonations() {
         }
     }
 
-    const addDonation = async (newDonation: Partial<Donation>) => {
+    const addDonation = async (newDonation: any) => {
         try {
                     const res = await axios.post('/api/donations', newDonation)
                     donations.value.push(res.data)
@@ -52,7 +53,7 @@ export function useDonations() {
 
 
 
-    // update donation status helpers here
+    // update donation status helpers her
 
     const updateDonationStatus = async (donation_id: number, donation_status: string) => {
         try {

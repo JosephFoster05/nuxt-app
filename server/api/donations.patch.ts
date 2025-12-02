@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
           // select updated row
           db.get(
-            'SELECT donation_id, user_id, clothing_name, donation_status, donation_size, donation_quality, donation_gender FROM donations WHERE donation_id = ?',
+            'SELECT donation_id, user_id, clothing_name, donation_status, donation_size, donation_quality, donation_gender, image_url FROM donations WHERE donation_id = ?',
             [donation_id],
             (err2: any, row: any) => {
               try { db.close() } catch (_) {}
