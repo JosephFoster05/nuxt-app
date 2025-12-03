@@ -1,6 +1,6 @@
 import { readBody, createError } from 'h3'
 
-const VALID_ROLES = ['Donor', 'Admin', 'CharityStaff']
+const VALID_ROLES = ['Donor', 'Admin', 'Staff']
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)

@@ -209,7 +209,7 @@ async function saveEdit() {
               <select v-model="editUser.Role">
                 <option value="Donor">Donor</option>
                 <option value="Admin">Admin</option>
-                <option value="CharityStaff">CharityStaff</option>
+                <option value="Staff">Staff</option>
               </select>
             </div>
             <hr />

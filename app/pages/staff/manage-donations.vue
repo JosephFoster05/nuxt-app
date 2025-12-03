@@ -21,9 +21,11 @@ const setProcessing = (id, v) => {
 onMounted(() => {
   try {
     if (!user.value || !user.value.is_admin) {
-      router.push("/login");
-      return;
+      if (!user.value || !user.value.is_staff)
+        router.push("/login");
+        return;
     }
+
   } catch (_) {}
   fetchUserData();
   fetchDonations();

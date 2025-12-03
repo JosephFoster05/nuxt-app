@@ -36,6 +36,8 @@ onMounted(() => {
 });
 
 
+
+
 </script>
 
 
@@ -71,13 +73,12 @@ onMounted(() => {
 
 <section>
       <h3>Donations</h3>
-
       <div v-if="donationsLoading">Loading donations…</div>
       <div v-else-if="donationsError">Error: {{ donationsError }}</div>
       <div v-else-if="donations.length === 0">
         No donations.
       </div>
-
+    
       <table v-else class="donations-table" border="1" cellpadding="6">
         <thead>
           <tr>

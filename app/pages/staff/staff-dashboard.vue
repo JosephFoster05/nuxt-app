@@ -10,7 +10,7 @@ const { user, fetchUserData, logout, error: authError } = useAuth();
 
 onMounted(() => {
   try {
-    if (!user.value || !user.value.is_admin) {
+    if (!user.value || !user.value.is_staff) {
       router.push("/login");
       return;
     }
@@ -19,14 +19,13 @@ onMounted(() => {
 });
 
 
-</script>
 
+</script>
 <template>
   <div>
-    <h2>Admin Dashboard</h2>
-    <p>Welcome to the admin dashboard. Here you can manage the application.</p>
+    <h2>Staff Dashboard</h2>
+    <p>Welcome to the staff dashboard. Here you can manage staff-related tasks.</p>
     <ul>
-      <li><NuxtLink to="/users">Manage Users</NuxtLink></li>
       <li><NuxtLink to="/staff/manage-donations">Manage Donations</NuxtLink></li>
     </ul>
   </div>
