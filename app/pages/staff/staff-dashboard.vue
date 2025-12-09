@@ -6,6 +6,15 @@ import { useDonations } from "../../../composables/useDonations";
 import { on } from "events";
 
 const { user, fetchUserData, logout, error: authError } = useAuth();
+const {
+  donations,
+  fetchDonations,
+  loading: donationsLoading,
+  error: donationsError,
+  updateDonationStatus,
+} = useDonations();
+
+
 
 
 onMounted(() => {
@@ -16,7 +25,12 @@ onMounted(() => {
     }
   } catch (_) {}
   fetchUserData();
+  fetchDonations();
 });
+
+
+
+
 
 
 
@@ -28,5 +42,11 @@ onMounted(() => {
     <ul>
       <li><NuxtLink to="/staff/manage-donations">Manage Donations</NuxtLink></li>
     </ul>
+    <hr />
+    <h3>Donation Statistics</h3>
+    <p>Total Donations Received: {{ donations?.length || 0 }}</p>
+    <p>
+      <NuxtLink to="/dashboard">Back to User Dashboard</NuxtLink>
+    </p>
   </div>
 </template>

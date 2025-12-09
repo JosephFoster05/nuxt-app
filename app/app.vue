@@ -2,6 +2,7 @@
 import { useHead } from "#app";
 import { computed, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useDonations } from "../composables/useDonations";
 
 useHead({
   title: "SustainWear",
@@ -21,18 +22,17 @@ useHead({
 
 import useAuth from "../composables/useAuth";
 
-try {
-  //fetch user data on app load to set initial auth state
-  //const { fetchUserData } = useAuth();
-  //await fetchUserData();
-} catch (e) {
-  //ignore errors here; user will be null if not logged in
-}
 
-// i believe that once the user auth is fetched and user is logged in they it doesnt have to be called on other pages again.
 
 const { user, fetchUserData, logout, error } = useAuth();
 const router = useRouter();
+const {
+  donations,
+  fetchDonations,
+  loading: donationsLoading,
+  error: donationsError,
+  updateDonationStatus,
+} = useDonations();
 
 const showLogoutSuccess = ref(false);
 const logoutMessage = ref("");
@@ -66,6 +66,12 @@ const isAdmin = computed(() => {
   );
 });
 
+const isStaff = computed(() => {
+  return !!(
+    user.value && String(user.value.Role || "").toLowerCase() === "staff"
+  );
+});
+
 const toast = ref(null);
 onMounted(() => {
   try {
@@ -77,6 +83,7 @@ onMounted(() => {
       setTimeout(() => (toast.value = null), 3500);
     }
   } catch (_) {}
+  fetchDonations();
 });
 </script>
 
@@ -101,6 +108,7 @@ onMounted(() => {
           <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
             >Admin Dashboard</NuxtLink
           >
+          <NuxtLink v-if="isStaff" to="/staff/staff-dashboard">Staff Dashboard</NuxtLink>
           <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
           <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
           <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>

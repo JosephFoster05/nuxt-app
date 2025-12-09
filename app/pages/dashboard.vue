@@ -19,6 +19,8 @@ const filteredDonations = computed(() => {
 });
 const router = useRouter();
 
+
+
 onMounted(() => {
   fetchUserData();
   fetchDonations();
@@ -51,6 +53,8 @@ const doLogout = async () => {
     </div>
 
     <hr />
+
+
 
     <section id="stats">
         <h3>Personal Statistics</h3>
