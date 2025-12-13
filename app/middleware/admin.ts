@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const headers = useRequestHeaders(['auth'])
+  const headers = useRequestHeaders(['cookie'])
   
   let user = null
 
