@@ -400,12 +400,12 @@ a:hover {
 
 .chart-container {
   display: flex;
-  flex-direction: column; /* stacked by default (mobile) */
+  flex-direction: column;
   gap: 20px;
 }
 
 .chart-wrapper {
-  width: 100%;       /* full width on mobile */
+  width: 100%;
 }
 
 @media (min-width: 576px) {
@@ -504,8 +504,8 @@ a:hover {
   }
 
   .chart-wrapper {
-    flex: 1;          /* equal width */
-    max-width: 50%;   /* optional: prevent overflow */
+    flex: 1;          
+    max-width: 50%;
   }
 }
 
