@@ -38,9 +38,14 @@ const loginUser = async () => {
     const data = await res.json()
     try { await fetchUserData() } catch (_) {}
     message.value = 'Login successful'
-    //redirect to dashboard on successful login
     console.log('Login data:', data)
-    router.push('/dashboard')
+    if (data.Role === 'Admin')
+        router.push('/admin/admin-dashboard')
+    else if (data.Role === 'Staff')
+        router.push('/staff/staff-dashboard')
+    else
+        router.push('/dashboard')
+
         } catch (err) {
             message.value = `Error: ${err?.message || err}` // shouldnt do this in production its bad to leak errors
     }
