@@ -93,12 +93,18 @@ definePageMeta({
 <template>
 
     <h1>Analyics</h1>
-
-    <!-- stats on how many users there is and how many donations have been made and how many are approved -->
     <div>
         <h2>Statistics</h2>
+        <h3>User statistics</h3>
         <ul>
             <li>Total Users: {{ users ? users.length : 0 }}</li>
+            <li>Admins: {{ users ? users.filter(u => u.Role === 'Admin').length : 0 }}</li>
+            <li>Staff: {{ users ? users.filter(u => u.Role === 'Staff').length : 0 }}</li>
+            <li>Regular Users: {{ users ? users.filter(u => !u.Role || u.Role === 'User').length : 0 }}</li>
+        </ul>
+
+        <h3>Donation statistics</h3>
+        <ul>
             <li>Total Donations: {{ donations ? donations.length : 0 }}</li>
             <li>Approved Donations: {{ donations ? donations.filter(d => d.donation_status === 'approved').length : 0 }}</li>
             <li>Pending Donations: {{ donations ? donations.filter(d => d.donation_status === 'pending').length : 0 }}</li>
@@ -171,6 +177,7 @@ definePageMeta({
     <!-- export to csv -->
     <div>
         <h2>Export Data</h2>
+        <p>This exports the data to useable CSV files that you can put into exel or google sheets and analyse effeciently!</p>
         <button @click="exportUsersToCSV">Export Users to CSV</button>
         <button @click="exportDonationsToCSV">Export Donations to CSV</button>
         <button @click="exportUsersAndDonationsToCSV">Export Users and Donations to CSV</button>
