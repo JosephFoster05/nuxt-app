@@ -15,9 +15,14 @@ const {
 const { data: users, pending, error, refresh } = await useFetch("/api/users");
 
 onMounted(() => {
+      try {
+    if (!user.value || !user) {
+      router.push("/login");
+      return;
+    }
+  } catch (_) {}
     fetchDonations();
 })
-
 function exportUsersToCSV()
 {
     const csvContent = "data:text/csv;charset=utf-8,"
@@ -75,8 +80,12 @@ function exportUsersAndDonationsToCSV()
     document.body.removeChild(link);
 }
 
+</script>
+
+<script>
+
 definePageMeta({
-  middleware: 'staff'
+  middleware: 'admin'
 })
 
 </script>
@@ -84,6 +93,22 @@ definePageMeta({
 <template>
 
     <h1>analyics</h1>
+
+    <!-- stats on how many users there is and how many donations have been made and how many are approved -->
+    <div>
+        <h2>Statistics</h2>
+        <ul>
+            <li>Total Users: {{ users ? users.length : 0 }}</li>
+            <li>Total Donations: {{ donations ? donations.length : 0 }}</li>
+            <li>Approved Donations: {{ donations ? donations.filter(d => d.donation_status === 'approved').length : 0 }}</li>
+            <li>Pending Donations: {{ donations ? donations.filter(d => d.donation_status === 'pending').length : 0 }}</li>
+            <li>Denied Donations: {{ donations ? donations.filter(d => d.donation_status === 'denied').length : 0 }}</li>
+        </ul>
+    </div>
+
+    <br>
+    <hr>
+    <br>
 
     <div>
         <h2>Users</h2>

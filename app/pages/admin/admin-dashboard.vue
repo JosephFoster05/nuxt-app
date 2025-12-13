@@ -31,6 +31,7 @@ definePageMeta({
     <ul>
       <li><NuxtLink to="/users">Manage Users</NuxtLink></li>
       <li><NuxtLink to="/staff/manage-donations">Manage Donations</NuxtLink></li>
+      <li><NuxtLink to="/admin/analytics">View Analytics</NuxtLink></li>
     </ul>
   </div>
 </template>
