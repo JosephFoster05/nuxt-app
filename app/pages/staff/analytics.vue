@@ -75,6 +75,10 @@ function exportUsersAndDonationsToCSV()
     document.body.removeChild(link);
 }
 
+definePageMeta({
+  middleware: 'staff'
+})
+
 </script>
 
 <template>
