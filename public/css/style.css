@@ -398,6 +398,16 @@ a:hover {
     color: #555;
 }
 
+.chart-container {
+  display: flex;
+  flex-direction: column; /* stacked by default (mobile) */
+  gap: 20px;
+}
+
+.chart-wrapper {
+  width: 100%;       /* full width on mobile */
+}
+
 @media (min-width: 576px) {
     body {
         padding: 1rem;
@@ -488,6 +498,15 @@ a:hover {
         font-size: 1rem;
         padding: 1.25rem;
     }
+
+    .chart-container {
+    flex-direction: row;
+  }
+
+  .chart-wrapper {
+    flex: 1;          /* equal width */
+    max-width: 50%;   /* optional: prevent overflow */
+  }
 }
 
 @media (min-width: 992px) {
@@ -586,26 +605,4 @@ section {
     li {
         border: 2px solid #000000;
     }
-}
-
-.chart-container {
-  display: flex;
-  flex-direction: column; /* stacked by default (mobile) */
-  gap: 20px;
-}
-
-/* Desktop: side by side */
-@media (min-width: 768px) {
-  .chart-container {
-    flex-direction: row;
-  }
-
-  .chart-wrapper {
-    flex: 1;          /* equal width */
-    max-width: 50%;   /* optional: prevent overflow */
-  }
-}
-
-.chart-wrapper {
-  width: 100%;       /* full width on mobile */
 }
