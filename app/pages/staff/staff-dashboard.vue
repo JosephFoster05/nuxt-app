@@ -30,8 +30,9 @@ onMounted(() => {
 
 
 
-
-
+definePageMeta({
+  middleware: 'staff'
+})
 
 
 </script>

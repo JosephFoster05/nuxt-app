@@ -10,7 +10,7 @@ const { user, fetchUserData, logout, error: authError } = useAuth();
 
 onMounted(() => {
   try {
-    if (!user.value || !user.value.is_admin) {
+    if (!user.value || !user) {
       router.push("/login");
       return;
     }
@@ -18,6 +18,9 @@ onMounted(() => {
   fetchUserData();
 });
 
+definePageMeta({
+  middleware: 'admin'
+})
 
 </script>
 
