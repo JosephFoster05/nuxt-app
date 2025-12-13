@@ -50,6 +50,30 @@ function exportDonationsToCSV()
     document.body.removeChild(link);
 }
 
+function exportUsersAndDonationsToCSV()
+{
+    // both as one file
+    const userHeaders = "User_ID,First_Name,Last_Name,Email,Role";
+    const donationHeaders = "Donation_ID,User_ID,Gender,Quality,Size,Status";
+
+    const userRows = users.value.map(u => `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${u.Role || 'User'}`);
+    const donationRows = donations.value.map(d => `${d.donation_id},${d.user_id},${ d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`);
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+        + [userHeaders]
+        .concat(userRows)
+        .concat([""]) // empty line between users and donations
+        .concat([donationHeaders])
+        .concat(donationRows)
+        .join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "users_and_donations_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 </script>
 
