@@ -70,6 +70,11 @@ const deny = async (d) => {
     setProcessing(d.donation_id, false);
   }
 };
+
+definePageMeta({
+  middleware: 'staff'
+})
+
 </script>
 
 <template>
