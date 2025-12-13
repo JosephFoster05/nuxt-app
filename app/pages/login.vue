@@ -41,7 +41,7 @@ const loginUser = async () => {
     //redirect to dashboard on successful login
     router.push('/dashboard')
         } catch (err) {
-            message.value = `Error: ${err?.message || err}`
+            message.value = `Error: ${err?.message || err}` // shouldnt do this in production its bad to leak errors
     }
 }
 </script>
