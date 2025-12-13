@@ -92,7 +92,7 @@ definePageMeta({
 
 <template>
 
-    <h1>Analyics</h1>
+    <h1>Analytics</h1>
     <div>
         <h2>Statistics</h2>
         <h3>User statistics</h3>
