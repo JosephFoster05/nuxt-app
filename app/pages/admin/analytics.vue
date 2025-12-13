@@ -102,30 +102,6 @@ definePageMeta({
 
 </script>
 
-<style>
-.chart-container {
-  display: flex;
-  flex-direction: column; /* stacked by default (mobile) */
-  gap: 20px;
-}
-
-/* Desktop: side by side */
-@media (min-width: 768px) {
-  .chart-container {
-    flex-direction: row;
-  }
-
-  .chart-wrapper {
-    flex: 1;          /* equal width */
-    max-width: 50%;   /* optional: prevent overflow */
-  }
-}
-
-.chart-wrapper {
-  width: 100%;       /* full width on mobile */
-}
-</style>
-
 <template>
 
     <h1>Analytics</h1>
