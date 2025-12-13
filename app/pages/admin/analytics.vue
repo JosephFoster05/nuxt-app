@@ -102,6 +102,30 @@ definePageMeta({
 
 </script>
 
+<style>
+.chart-container {
+  display: flex;
+  flex-direction: column; /* stacked by default (mobile) */
+  gap: 20px;
+}
+
+/* Desktop: side by side */
+@media (min-width: 768px) {
+  .chart-container {
+    flex-direction: row;
+  }
+
+  .chart-wrapper {
+    flex: 1;          /* equal width */
+    max-width: 50%;   /* optional: prevent overflow */
+  }
+}
+
+.chart-wrapper {
+  width: 100%;       /* full width on mobile */
+}
+</style>
+
 <template>
 
     <h1>Analytics</h1>
@@ -125,22 +149,25 @@ definePageMeta({
     </div>
 
 
-<!-- make pie charts same line-->
-<PieChart
-  :labels="['Admin', 'Staff', 'User']"
-  :data="[roles.admin, roles.staff, roles.user]"
-  :colors="['#f87171', '#60a5fa', '#34d399']"
-/>
+    
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <PieChart
+                :labels="['Admin', 'Staff', 'User']"
+                :data="[roles.admin, roles.staff, roles.user]"
+                :colors="['#f87171', '#60a5fa', '#34d399']"
+            />
+        </div>
 
-<PieChart
-  :labels="['Approved', 'Pending', 'Denied']"
-  :data="[
-    donationStats.approved,
-    donationStats.pending,
-    donationStats.denied
-  ]"
-  :colors="['#22c55e', '#facc15', '#ef4444']"
-/>
+        <div class="chart-wrapper">
+            <PieChart
+                :labels="['Approved', 'Pending', 'Denied']"
+                :data="[donationStats.approved, donationStats.pending, donationStats.denied]"
+                :colors="['#22c55e', '#facc15', '#ef4444']"
+            />
+        </div>
+    </div>
+    
 
 
     <br>
