@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
     // query user
     const row: any = await new Promise((resolve, reject) => {
-      db.get('SELECT User_ID, First_Name, Last_Name, Email, Password, Phone FROM User WHERE Email = ?', [Email], (err, row) => {
+      db.get('SELECT User_ID, First_Name, Last_Name, Email, Password, Phone, Role FROM User WHERE Email = ?', [Email], (err, row) => {
         db.close()
         if (err) return reject(err)
         resolve(row)
