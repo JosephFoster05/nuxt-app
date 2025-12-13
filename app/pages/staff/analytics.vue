@@ -144,6 +144,7 @@ function exportUsersAndDonationsToCSV()
         <h2>Export Data</h2>
         <button @click="exportUsersToCSV">Export Users to CSV</button>
         <button @click="exportDonationsToCSV">Export Donations to CSV</button>
+        <button @click="exportUsersAndDonationsToCSV">Export Users and Donations to CSV</button>
     </div>
 
 </template>
