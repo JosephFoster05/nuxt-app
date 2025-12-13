@@ -1,6 +1,7 @@
 export default defineNuxtRouteMiddleware(async () => {
   const { user } = await $fetch('/api/current-user')
 
+  // not logged in
   if (!user) {
     return navigateTo('/login')
   }
