@@ -14,6 +14,7 @@ const {
 
 const { data: users, pending, error, refresh } = await useFetch("/api/users");
 
+
 </script>
 
 <template>
@@ -37,8 +38,8 @@ const { data: users, pending, error, refresh } = await useFetch("/api/users");
                     <td>{{ user.User_ID }}</td>
                     <td>{{ user.First_Name }}</td>
                     <td>{{ user.Last_Name }}</td>
-                    <td>{{ user.Email }}</td>
-                    <td>{{ user.Role }}</td>  <!-- if null then need to display just user no extra perms-->
+                    <td>{{ user.Email }}</td> 
+                    <td>{{ user.Role || 'User' }}</td>
                 </tr>
             </tbody>
         </table>
