@@ -14,6 +14,8 @@ const {
 
 const { data: users, pending, error, refresh } = await useFetch("/api/users");
 
+const roles = await $fetch('/api/user-roles')
+
 onMounted(() => {
       try {
     if (!user.value || !user) {
@@ -80,6 +82,16 @@ function exportUsersAndDonationsToCSV()
     document.body.removeChild(link);
 }
 
+const donationStats = computed(() => {
+  const list = donations.value ?? []
+
+  return {
+    approved: list.filter(d => d.donation_status === 'approved').length,
+    pending: list.filter(d => d.donation_status === 'pending').length,
+    denied: list.filter(d => d.donation_status === 'denied').length
+  }
+})
+
 </script>
 
 <script>
@@ -111,6 +123,25 @@ definePageMeta({
             <li>Denied Donations: {{ donations ? donations.filter(d => d.donation_status === 'denied').length : 0 }}</li>
         </ul>
     </div>
+
+
+<!-- make pie charts same line-->
+<PieChart
+  :labels="['Admin', 'Staff', 'User']"
+  :data="[roles.admin, roles.staff, roles.user]"
+  :colors="['#f87171', '#60a5fa', '#34d399']"
+/>
+
+<PieChart
+  :labels="['Approved', 'Pending', 'Denied']"
+  :data="[
+    donationStats.approved,
+    donationStats.pending,
+    donationStats.denied
+  ]"
+  :colors="['#22c55e', '#facc15', '#ef4444']"
+/>
+
 
     <br>
     <hr>
