@@ -18,6 +18,38 @@ onMounted(() => {
     fetchDonations();
 })
 
+function exportUsersToCSV()
+{
+    const csvContent = "data:text/csv;charset=utf-8,"
+        + ["User_ID,First_Name,Last_Name,Email,Role"]
+        .concat(users.value.map(u => `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${u.Role || 'User'}`))
+        .join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "users_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function exportDonationsToCSV()
+{
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+        + ["Donation_ID,User_ID,Gender,Quality,Size,Status"]
+        .concat(donations.value.map(d => `${d.donation_id},${d.user_id},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`))
+        .join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "donations_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 
 </script>
 
@@ -83,6 +115,11 @@ onMounted(() => {
     <hr>
     <br>
 
-
+    <!-- export to csv -->
+    <div>
+        <h2>Export Data</h2>
+        <button @click="exportUsersToCSV">Export Users to CSV</button>
+        <button @click="exportDonationsToCSV">Export Donations to CSV</button>
+    </div>
 
 </template>
