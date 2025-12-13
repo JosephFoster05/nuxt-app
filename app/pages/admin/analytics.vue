@@ -92,7 +92,7 @@ definePageMeta({
 
 <template>
 
-    <h1>analyics</h1>
+    <h1>Analyics</h1>
 
     <!-- stats on how many users there is and how many donations have been made and how many are approved -->
     <div>
