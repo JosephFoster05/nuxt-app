@@ -64,7 +64,7 @@ export default defineEventHandler(async (event) => {
       secure: process.env.NODE_ENV === 'production'
     })
 
-    return { success: true, user: safeUser }
+    return { success: true, user: safeUser, Role: row.Role || 'User' }
   } catch (err: any) {
     throw createError({ statusCode: err?.statusCode || 500, statusMessage: String(err?.statusMessage || err?.message || err) })
   }

@@ -28,10 +28,12 @@ onMounted(() => {
 
 
 
+
 const doLogout = async () => {
   await logout();
   router.push("/login");
 };
+
 </script>
 
 <template>
@@ -53,7 +55,6 @@ const doLogout = async () => {
     </div>
 
     <hr />
-
 
 
     <section id="stats">
