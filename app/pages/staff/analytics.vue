@@ -12,10 +12,15 @@ const {
   updateDonationStatus,
 } = useDonations();
 
+const { data: users, pending, error, refresh } = await useFetch("/api/users");
+
 </script>
 
 <template>
 
     <h1>analyics</h1>
+
+    
+
 
 </template>
