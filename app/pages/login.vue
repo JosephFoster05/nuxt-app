@@ -38,7 +38,6 @@ const loginUser = async () => {
     const data = await res.json()
     try { await fetchUserData() } catch (_) {}
     message.value = 'Login successful'
-    console.log('Login data:', data)
     if (data.Role === 'Admin')
         router.push('/admin/admin-dashboard')
     else if (data.Role === 'Staff')
