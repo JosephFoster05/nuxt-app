@@ -1,5 +1,18 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const { user } = await $fetch('/api/current-user')
+  const headers = useRequestHeaders(['auth'])
+  
+  let user = null
+
+  try {
+    const res = await $fetch('/api/current-user', {
+      headers,
+      credentials: 'include'
+    })
+
+    user = res?.user ?? null
+  } catch {
+    user = null
+  }
 
   // not logged in
   if (!user) {
