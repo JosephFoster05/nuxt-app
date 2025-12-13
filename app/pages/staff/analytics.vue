@@ -14,6 +14,10 @@ const {
 
 const { data: users, pending, error, refresh } = await useFetch("/api/users");
 
+onMounted(() => {
+    fetchDonations();
+})
+
 
 </script>
 
@@ -44,6 +48,41 @@ const { data: users, pending, error, refresh } = await useFetch("/api/users");
             </tbody>
         </table>
     </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div>
+        <h2>Donations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Donation ID</th>
+                    <th>User ID</th>
+                    <th>Gender</th>
+                    <th>Quality</th>
+                    <th>size</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="donation in donations" :key="donation.donation_id">
+                    <td>{{ donation.donation_id }}</td>
+                    <td>{{ donation.user_id }}</td>
+                    <td>{{ donation.donation_gender }}</td>
+                    <td>{{ donation.donation_quality }}</td>
+                    <td>{{ donation.donation_size }}</td>
+                    <td>{{ donation.donation_status }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
 
 
 </template>
