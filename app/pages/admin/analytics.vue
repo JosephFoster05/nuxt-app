@@ -45,8 +45,8 @@ function exportDonationsToCSV()
 {
 
     const csvContent = "data:text/csv;charset=utf-8,"
-        + ["Donation_ID,User_ID,Gender,Quality,Size,Status"]
-        .concat(donations.value.map(d => `${d.donation_id},${d.user_id},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`))
+        + ["Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status"]
+        .concat(donations.value.map(d => `${d.donation_id},${d.user_id},${(d.clothing_name||'').replace(/,/g,'')},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`))
         .join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -61,10 +61,10 @@ function exportUsersAndDonationsToCSV()
 {
     // both as one file
     const userHeaders = "User_ID,First_Name,Last_Name,Email,Role";
-    const donationHeaders = "Donation_ID,User_ID,Gender,Quality,Size,Status";
+    const donationHeaders = "Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status";
 
     const userRows = users.value.map(u => `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${u.Role || 'User'}`);
-    const donationRows = donations.value.map(d => `${d.donation_id},${d.user_id},${ d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`);
+    const donationRows = donations.value.map(d => `${d.donation_id},${d.user_id},${(d.clothing_name||'').replace(/,/g,'')},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`);
 
     const csvContent = "data:text/csv;charset=utf-8,"
         + [userHeaders]
@@ -91,6 +91,32 @@ const donationStats = computed(() => {
     denied: list.filter(d => d.donation_status === 'denied').length
   }
 })
+
+const clothingStats = computed(() => {
+    const list = donations.value ?? []
+    const counts = {}
+    list.forEach(d => {
+        const name = (d.clothing_name || 'unknown').toString().trim().toLowerCase()
+        counts[name] = (counts[name] || 0) + 1
+    })
+    return counts
+})
+
+const topClothing = computed(() => {
+    const entries = Object.entries(clothingStats.value || {})
+    entries.sort((a, b) => b[1] - a[1])
+    const top = entries.slice(0, 6)
+    return {
+        labels: top.map(e => e[0]),
+        data: top.map(e => e[1])
+    }
+})
+
+const formatLabel = (s) => {
+    if (!s) return s
+    // replace hyphens/underscores with space, trim and capitalize words
+    return s.replace(/[-_]/g, ' ').split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+}
 
 </script>
 
@@ -122,6 +148,10 @@ definePageMeta({
             <li>Pending Donations: {{ donations ? donations.filter(d => d.donation_status === 'pending').length : 0 }}</li>
             <li>Denied Donations: {{ donations ? donations.filter(d => d.donation_status === 'denied').length : 0 }}</li>
         </ul>
+        <h4>Top Donated Items</h4>
+        <ul>
+            <li v-for="(label, idx) in topClothing.labels" :key="label">{{ formatLabel(label) }}: {{ topClothing.data[idx] }}</li>
+        </ul>
     </div>
 
 
@@ -140,6 +170,13 @@ definePageMeta({
                 :labels="['Approved', 'Pending', 'Denied']"
                 :data="[donationStats.approved, donationStats.pending, donationStats.denied]"
                 :colors="['#22c55e', '#facc15', '#ef4444']"
+            />
+        </div>
+        <div class="chart-wrapper">
+            <PieChart
+                :labels="topClothing.labels"
+                :data="topClothing.data"
+                :colors="['#60a5fa','#f87171','#34d399','#f59e0b','#a78bfa','#06b6d4']"
             />
         </div>
     </div>
@@ -185,6 +222,7 @@ definePageMeta({
                 <tr>
                     <th>Donation ID</th>
                     <th>User ID</th>
+                    <th>Clothing Name</th>
                     <th>Gender</th>
                     <th>Quality</th>
                     <th>size</th>
@@ -195,6 +233,7 @@ definePageMeta({
                 <tr v-for="donation in donations" :key="donation.donation_id">
                     <td>{{ donation.donation_id }}</td>
                     <td>{{ donation.user_id }}</td>
+                    <td>{{ donation.clothing_name }}</td>
                     <td>{{ donation.donation_gender }}</td>
                     <td>{{ donation.donation_quality }}</td>
                     <td>{{ donation.donation_size }}</td>
