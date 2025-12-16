@@ -30,6 +30,10 @@ const dummyStats = {
     peopleHelped: 5000,
     communitiesServed: 50
 }
+const acceptedDonations = computed(() => {
+  if (!donations?.value) return [];
+  return donations.value.filter((d) => d.donation_status === "approved");
+});
 
 onMounted(() => {
   fetchDonations();
@@ -50,10 +54,10 @@ onMounted(() => {
     <section id="stats">
         <h3>Statistics</h3>
         <ul>
-            <li>Clothing items donated: {{ donations ? donations.length : 0 }}+</li>
+            <li>Clothing items donated: {{ acceptedDonations.length }}+</li>
             <li>People helped: {{ dummyStats.peopleHelped }}+</li>
             <!-- Assuming an average CO2e savings of 6kg per donated clothing item and only accepted ones -->
-            <li>Estimated CO2e savings: {{ (donations ? donations.filter(d => d.donation_status === 'approved').length : 0) * 6  }}kg</li>
+            <li>Estimated CO2e savings: {{ acceptedDonations.length * 6 }}kg</li>
         </ul>
     </section>
 
@@ -65,7 +69,7 @@ onMounted(() => {
             <p>Total Donations Recorded: {{ donations ? donations.length : 0 }}</p>
 
             <!-- donations that have been approved filter to count them -->
-            <p>Accepted Donations: {{ donations ? donations.filter(d => d.donation_status === 'approved').length : 0 }}</p>
+            <p>Accepted Donations: {{ acceptedDonations.length }}</p>
 
             <!-- Future implementation: Add charts/graphs to visualize donation trends -->
         </div>
@@ -75,8 +79,8 @@ onMounted(() => {
       <h3>Donations</h3>
       <div v-if="donationsLoading">Loading donations…</div>
       <div v-else-if="donationsError">Error: {{ donationsError }}</div>
-      <div v-else-if="donations.length === 0">
-        No donations.
+      <div v-else-if="acceptedDonations.length === 0">
+        No accepted donations.
       </div>
     
       <table v-else class="donations-table" border="1" cellpadding="6">
@@ -92,7 +96,7 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="d in donations" :key="d.donation_id">
+          <tr v-for="d in acceptedDonations" :key="d.donation_id">
             <td>{{ d.donation_id }}</td>
             <td>{{ d.user_id }}</td>
             <td>{{ d.clothing_name }}</td>
