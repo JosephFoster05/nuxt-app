@@ -14,246 +14,320 @@ const {
 
 const { data: users, pending, error, refresh } = await useFetch("/api/users");
 
-const roles = await $fetch('/api/user-roles')
+const roles = await $fetch("/api/user-roles");
 
 onMounted(() => {
-      try {
+  try {
     if (!user.value || !user) {
       router.push("/login");
       return;
     }
   } catch (_) {}
-    fetchDonations();
-})
-function exportUsersToCSV()
-{
-    const csvContent = "data:text/csv;charset=utf-8,"
-        + ["User_ID,First_Name,Last_Name,Email,Role"]
-        .concat(users.value.map(u => `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${u.Role || 'User'}`))
-        .join("\n");
+  fetchDonations();
+});
+function exportUsersToCSV() {
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    ["User_ID,First_Name,Last_Name,Email,Role"]
+      .concat(
+        users.value.map(
+          (u) =>
+            `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${
+              u.Role || "User"
+            }`
+        )
+      )
+      .join("\n");
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "users_data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "users_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-function exportDonationsToCSV()
-{
-
-    const csvContent = "data:text/csv;charset=utf-8,"
-        + ["Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status"]
-        .concat(donations.value.map(d => `${d.donation_id},${d.user_id},${(d.clothing_name||'').replace(/,/g,'')},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`))
-        .join("\n");
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "donations_data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+function exportDonationsToCSV() {
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    ["Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status"]
+      .concat(
+        donations.value.map(
+          (d) =>
+            `${d.donation_id},${d.user_id},${(d.clothing_name || "").replace(
+              /,/g,
+              ""
+            )},${d.donation_gender},${d.donation_quality},${d.donation_size},${
+              d.donation_status
+            }`
+        )
+      )
+      .join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "donations_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-function exportUsersAndDonationsToCSV()
-{
-    // both as one file
-    const userHeaders = "User_ID,First_Name,Last_Name,Email,Role";
-    const donationHeaders = "Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status";
+function exportUsersAndDonationsToCSV() {
+  // both as one file
+  const userHeaders = "User_ID,First_Name,Last_Name,Email,Role";
+  const donationHeaders =
+    "Donation_ID,User_ID,Clothing_Name,Gender,Quality,Size,Status";
 
-    const userRows = users.value.map(u => `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${u.Role || 'User'}`);
-    const donationRows = donations.value.map(d => `${d.donation_id},${d.user_id},${(d.clothing_name||'').replace(/,/g,'')},${d.donation_gender},${d.donation_quality},${d.donation_size},${d.donation_status}`);
+  const userRows = users.value.map(
+    (u) =>
+      `${u.User_ID},${u.First_Name},${u.Last_Name},${u.Email},${
+        u.Role || "User"
+      }`
+  );
+  const donationRows = donations.value.map(
+    (d) =>
+      `${d.donation_id},${d.user_id},${(d.clothing_name || "").replace(
+        /,/g,
+        ""
+      )},${d.donation_gender},${d.donation_quality},${d.donation_size},${
+        d.donation_status
+      }`
+  );
 
-    const csvContent = "data:text/csv;charset=utf-8,"
-        + [userHeaders]
-        .concat(userRows)
-        .concat([""]) // empty line between users and donations
-        .concat([donationHeaders])
-        .concat(donationRows)
-        .join("\n");
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "users_and_donations_data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    [userHeaders]
+      .concat(userRows)
+      .concat([""]) // empty line between users and donations
+      .concat([donationHeaders])
+      .concat(donationRows)
+      .join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "users_and_donations_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 const donationStats = computed(() => {
-  const list = donations.value ?? []
+  const list = donations.value ?? [];
 
   return {
-    approved: list.filter(d => d.donation_status === 'approved').length,
-    pending: list.filter(d => d.donation_status === 'pending').length,
-    denied: list.filter(d => d.donation_status === 'denied').length
-  }
-})
+    approved: list.filter((d) => d.donation_status === "approved").length,
+    pending: list.filter((d) => d.donation_status === "pending").length,
+    denied: list.filter((d) => d.donation_status === "denied").length,
+  };
+});
 
 const clothingStats = computed(() => {
-    const list = donations.value ?? []
-    const counts = {}
-    list.forEach(d => {
-        const name = (d.clothing_name || 'unknown').toString().trim().toLowerCase()
-        counts[name] = (counts[name] || 0) + 1
-    })
-    return counts
-})
+  const list = donations.value ?? [];
+  const counts = {};
+  list.forEach((d) => {
+    const name = (d.clothing_name || "unknown").toString().trim().toLowerCase();
+    counts[name] = (counts[name] || 0) + 1;
+  });
+  return counts;
+});
 
 const topClothing = computed(() => {
-    const entries = Object.entries(clothingStats.value || {})
-    entries.sort((a, b) => b[1] - a[1])
-    const top = entries.slice(0, 6)
-    return {
-        labels: top.map(e => e[0]),
-        data: top.map(e => e[1])
-    }
-})
+  const entries = Object.entries(clothingStats.value || {});
+  entries.sort((a, b) => b[1] - a[1]);
+  const top = entries.slice(0, 6);
+  return {
+    labels: top.map((e) => e[0]),
+    data: top.map((e) => e[1]),
+  };
+});
 
 const formatLabel = (s) => {
-    if (!s) return s
-    // replace hyphens/underscores with space, trim and capitalize words
-    return s.replace(/[-_]/g, ' ').split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-}
-
+  if (!s) return s;
+  // replace dash/underscores with space, trim and capitalize words
+  return s
+    .replace(/[-_]/g, " ")
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+};
 </script>
 
 <script>
-
 definePageMeta({
-  middleware: 'admin'
-})
-
+  middleware: "admin",
+});
 </script>
 
 <template>
+  <h1>Analytics</h1>
+  <div>
+    <h2>Statistics</h2>
+    <h3>User statistics</h3>
+    <ul>
+      <li>Total Users: {{ users ? users.length : 0 }}</li>
+      <li>
+        Admins: {{ users ? users.filter((u) => u.Role === "Admin").length : 0 }}
+      </li>
+      <li>
+        Staff: {{ users ? users.filter((u) => u.Role === "Staff").length : 0 }}
+      </li>
+      <li>
+        Regular Users:
+        {{
+          users ? users.filter((u) => !u.Role || u.Role === "User").length : 0
+        }}
+      </li>
+    </ul>
 
-    <h1>Analytics</h1>
-    <div>
-        <h2>Statistics</h2>
-        <h3>User statistics</h3>
-        <ul>
-            <li>Total Users: {{ users ? users.length : 0 }}</li>
-            <li>Admins: {{ users ? users.filter(u => u.Role === 'Admin').length : 0 }}</li>
-            <li>Staff: {{ users ? users.filter(u => u.Role === 'Staff').length : 0 }}</li>
-            <li>Regular Users: {{ users ? users.filter(u => !u.Role || u.Role === 'User').length : 0 }}</li>
-        </ul>
+    <h3>Donation statistics</h3>
+    <ul>
+      <li>Total Donations: {{ donations ? donations.length : 0 }}</li>
+      <li>
+        Approved Donations:
+        {{
+          donations
+            ? donations.filter((d) => d.donation_status === "approved").length
+            : 0
+        }}
+      </li>
+      <li>
+        Pending Donations:
+        {{
+          donations
+            ? donations.filter((d) => d.donation_status === "pending").length
+            : 0
+        }}
+      </li>
+      <li>
+        Denied Donations:
+        {{
+          donations
+            ? donations.filter((d) => d.donation_status === "denied").length
+            : 0
+        }}
+      </li>
+    </ul>
+    <h4>Top Donated Items</h4>
+    <ul>
+      <li v-for="(label, idx) in topClothing.labels" :key="label">
+        {{ formatLabel(label) }}: {{ topClothing.data[idx] }}
+      </li>
+    </ul>
+  </div>
 
-        <h3>Donation statistics</h3>
-        <ul>
-            <li>Total Donations: {{ donations ? donations.length : 0 }}</li>
-            <li>Approved Donations: {{ donations ? donations.filter(d => d.donation_status === 'approved').length : 0 }}</li>
-            <li>Pending Donations: {{ donations ? donations.filter(d => d.donation_status === 'pending').length : 0 }}</li>
-            <li>Denied Donations: {{ donations ? donations.filter(d => d.donation_status === 'denied').length : 0 }}</li>
-        </ul>
-        <h4>Top Donated Items</h4>
-        <ul>
-            <li v-for="(label, idx) in topClothing.labels" :key="label">{{ formatLabel(label) }}: {{ topClothing.data[idx] }}</li>
-        </ul>
+  <div class="chart-container">
+    <div class="chart-wrapper">
+      <PieChart
+        :labels="['Admin', 'Staff', 'User']"
+        :data="[roles.admin, roles.staff, roles.user]"
+        :colors="['#f87171', '#60a5fa', '#34d399']"
+      />
     </div>
 
-
-    
-    <div class="chart-container">
-        <div class="chart-wrapper">
-            <PieChart
-                :labels="['Admin', 'Staff', 'User']"
-                :data="[roles.admin, roles.staff, roles.user]"
-                :colors="['#f87171', '#60a5fa', '#34d399']"
-            />
-        </div>
-
-        <div class="chart-wrapper">
-            <PieChart
-                :labels="['Approved', 'Pending', 'Denied']"
-                :data="[donationStats.approved, donationStats.pending, donationStats.denied]"
-                :colors="['#22c55e', '#facc15', '#ef4444']"
-            />
-        </div>
-        <div class="chart-wrapper">
-            <PieChart
-                :labels="topClothing.labels"
-                :data="topClothing.data"
-                :colors="['#60a5fa','#f87171','#34d399','#f59e0b','#a78bfa','#06b6d4']"
-            />
-        </div>
+    <div class="chart-wrapper">
+      <PieChart
+        :labels="['Approved', 'Pending', 'Denied']"
+        :data="[
+          donationStats.approved,
+          donationStats.pending,
+          donationStats.denied,
+        ]"
+        :colors="['#22c55e', '#facc15', '#ef4444']"
+      />
     </div>
-    
-
-
-    <br>
-    <hr>
-    <br>
-
-    <div>
-        <h2>Users</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="user in users" :key="user.User_ID">
-                    <td>{{ user.User_ID }}</td>
-                    <td>{{ user.First_Name }}</td>
-                    <td>{{ user.Last_Name }}</td>
-                    <td>{{ user.Email }}</td> 
-                    <td>{{ user.Role || 'User' }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="chart-wrapper">
+      <PieChart
+        :labels="topClothing.labels"
+        :data="topClothing.data"
+        :colors="[
+          '#60a5fa',
+          '#f87171',
+          '#34d399',
+          '#f59e0b',
+          '#a78bfa',
+          '#06b6d4',
+        ]"
+      />
     </div>
+  </div>
 
-    <br>
-    <hr>
-    <br>
+  <br />
+  <hr />
+  <br />
 
-    <div>
-        <h2>Donations</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Donation ID</th>
-                    <th>User ID</th>
-                    <th>Clothing Name</th>
-                    <th>Gender</th>
-                    <th>Quality</th>
-                    <th>size</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="donation in donations" :key="donation.donation_id">
-                    <td>{{ donation.donation_id }}</td>
-                    <td>{{ donation.user_id }}</td>
-                    <td>{{ donation.clothing_name }}</td>
-                    <td>{{ donation.donation_gender }}</td>
-                    <td>{{ donation.donation_quality }}</td>
-                    <td>{{ donation.donation_size }}</td>
-                    <td>{{ donation.donation_status }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div>
+    <h2>Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.User_ID">
+          <td>{{ user.User_ID }}</td>
+          <td>{{ user.First_Name }}</td>
+          <td>{{ user.Last_Name }}</td>
+          <td>{{ user.Email }}</td>
+          <td>{{ user.Role || "User" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <br>
-    <hr>
-    <br>
+  <br />
+  <hr />
+  <br />
 
-    <!-- export to csv -->
-    <div>
-        <h2>Export Data</h2>
-        <p>This exports the data to useable CSV files that you can put into exel or google sheets and analyse effeciently!</p>
-        <button @click="exportUsersToCSV">Export Users to CSV</button>
-        <button @click="exportDonationsToCSV">Export Donations to CSV</button>
-        <button @click="exportUsersAndDonationsToCSV">Export Users and Donations to CSV</button>
-    </div>
+  <div>
+    <h2>Donations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Donation ID</th>
+          <th>User ID</th>
+          <th>Clothing Name</th>
+          <th>Gender</th>
+          <th>Quality</th>
+          <th>size</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="donation in donations" :key="donation.donation_id">
+          <td>{{ donation.donation_id }}</td>
+          <td>{{ donation.user_id }}</td>
+          <td>{{ donation.clothing_name }}</td>
+          <td>{{ donation.donation_gender }}</td>
+          <td>{{ donation.donation_quality }}</td>
+          <td>{{ donation.donation_size }}</td>
+          <td>{{ donation.donation_status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+  <br />
+  <hr />
+  <br />
+
+  <!-- export to csv -->
+  <div>
+    <h2>Export Data</h2>
+    <p>
+      This exports the data to useable CSV files that you can put into exel or
+      google sheets and analyse effeciently!
+    </p>
+    <button @click="exportUsersToCSV">Export Users to CSV</button>
+    <button @click="exportDonationsToCSV">Export Donations to CSV</button>
+    <button @click="exportUsersAndDonationsToCSV">
+      Export Users and Donations to CSV
+    </button>
+  </div>
 </template>

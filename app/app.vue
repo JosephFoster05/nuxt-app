@@ -22,8 +22,6 @@ useHead({
 
 import useAuth from "../composables/useAuth";
 
-
-
 const { user, fetchUserData, logout, error } = useAuth();
 const router = useRouter();
 const {
@@ -80,7 +78,8 @@ onMounted(() => {
       const obj = JSON.parse(raw);
       toast.value = obj?.message || String(obj);
       sessionStorage.removeItem("toast");
-      setTimeout(() => (toast.value = null), 3500);
+      // changed to 4 seconds to account for slower machines.
+      setTimeout(() => (toast.value = null), 4000);
     }
   } catch (_) {}
   fetchDonations();
@@ -107,7 +106,9 @@ onMounted(() => {
           <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
             >Admin Dashboard</NuxtLink
           >
-          <NuxtLink v-if="isStaff" to="/staff/staff-dashboard">Staff Dashboard</NuxtLink>
+          <NuxtLink v-if="isStaff" to="/staff/staff-dashboard"
+            >Staff Dashboard</NuxtLink
+          >
           <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
           <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
           <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
