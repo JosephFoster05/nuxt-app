@@ -26,10 +26,8 @@ onMounted(() => {
 
 const doLogout = async () => {
   await logout();
-  router.push("/login");
+  router.push("/");
 };
-<<<<<<< HEAD
-=======
 
 // request deletion of user data stuff, reused code from users.vue
 const showRequestDelete = ref(false);
@@ -92,7 +90,6 @@ async function submitRequestDelete() {
   }
 }
 
->>>>>>> a6da9f904bf5eb6ac0dcec19bec28ad1af4af0e4
 </script>
 
 <template>
