@@ -2,6 +2,9 @@
 import { onMounted, computed, ref, watch, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useDonations } from "../../composables/useDonations";
+import useAuth from "../../composables/useAuth";
+
+const { user, fetchUserData, logout, error: authError } = useAuth();
 
 const {
   donations,
@@ -55,9 +58,18 @@ const selectedCenters = ref({} as Record<string | number, string | null>);
 const addedInventory = ref(new Set<number>());
 const itemMessages = ref({} as Record<string | number, string>);
 
-onMounted(() => {
-  fetchDonations();
+// determine whether current user may add items to inventory
+const canAddToInventory = computed(() => {
+  const role = (user?.value?.role ?? user?.value?.Role ?? "").toString().toLowerCase();
+  return role === "staff" || role === "admin";
 });
+
+onMounted(async () => {
+  fetchDonations();
+  // attempt to fetch current user; if not logged in that's okay
+  fetchUserData().catch(() => {})
+});
+
 
 async function addToInventory(item: any) {
   const id = item?.donation_id;
@@ -119,13 +131,13 @@ async function addToInventory(item: any) {
         <p>Size: {{ item.donation_size ?? "-" }}</p>
         <p>Quality: {{ item.donation_quality ?? "-" }}</p>
         <p>Gender: {{ item.donation_gender ?? "-" }}</p>
-        <div class="inventory-actions">
+        <div class="inventory-actions" v-if="canAddToInventory">
           <label for="center-select-{{ item.donation_id }}">Choose distribution center:</label>
           <select :id="`center-select-${item.donation_id}`" v-model="selectedCenters[item.donation_id]">
-            <option value="" disabled selected>Select center</option>
+            <option value="" disabled>Select center</option>
             <option v-for="(addr, name) in distribution_centers" :key="name" :value="addr">{{ name }}</option>
           </select>
-          <button
+          <button 
             :disabled="!selectedCenters[item.donation_id] || addedInventory.has(Number(item.donation_id))"
             @click.prevent="addToInventory(item)"
           >
