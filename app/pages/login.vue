@@ -63,7 +63,15 @@ const loginUser = async () => {
                 <label for="Password">Password:</label>
                 <input id="Password" type="password" v-model="Password" required />
             </div>
-            <button type="submit">Login</button>
+            <div class="button-center">
+                <button type="submit">Login</button>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="register-text">
+                Don’t have an account?
+                <a href="/register" class="register-link">Register here</a>
+                </p>
+            </div>
         </form>
         <div v-if="message">{{ message }}</div>
     </div>

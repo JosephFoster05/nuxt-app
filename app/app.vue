@@ -104,12 +104,12 @@ onMounted(() => {
         <div id="hamburgerLinks">
           <NuxtLink to="/about-us">About</NuxtLink>
           <NuxtLink to="/our-impact">Impact</NuxtLink>
-          <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
           <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
             >Admin Dashboard</NuxtLink
           >
           <NuxtLink v-if="isStaff" to="/staff/staff-dashboard">Staff Dashboard</NuxtLink>
           <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
+          <NuxtLink v-if="!user" to="/register">Register</NuxtLink>
           <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
           <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
           <NuxtLink to="/catalog">Catalog</NuxtLink>
