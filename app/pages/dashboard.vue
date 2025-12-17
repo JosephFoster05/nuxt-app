@@ -188,7 +188,7 @@ async function submitRequestDelete() {
         <button @click="closeRequestDelete" :disabled="requestDeleting">Cancel</button>
         <button @click="submitRequestDelete" :disabled="requestDeleting">{{ requestDeleting ? 'Deleting...' : 'Delete my data' }}</button>
       </div>
-      <div v-if="requestDeleteError" class="error">{{ requestDeleteError }}</div>
+      <div v-if="requestDeleteError" class="error">Failed to delete data, is the password correct?</div>
     </div>
   </div>
 </template>

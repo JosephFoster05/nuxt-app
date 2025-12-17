@@ -53,7 +53,6 @@ const distribution_centers = {
 const selectedCenters = ref({} as Record<string | number, string | null>);
 // track which donation items have been added to inventory
 const addedInventory = ref(new Set<number>());
-// optional feedback message per item
 const itemMessages = ref({} as Record<string | number, string>);
 
 onMounted(() => {

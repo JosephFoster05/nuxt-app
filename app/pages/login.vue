@@ -31,7 +31,7 @@ const loginUser = async () => {
 
         if (!res.ok) {
             const text = await res.text()
-            message.value = `Login failed ultimately: ${res.status} ${text}`
+            message.value = `login failed: wrong credentials or server error.`
             return
         }
 
