@@ -31,7 +31,7 @@ const loginUser = async () => {
 
         if (!res.ok) {
             const text = await res.text()
-            message.value = `Login failed ultimately: ${res.status} ${text}`
+            message.value = `login failed: wrong credentials or server error.`
             return
         }
 
@@ -46,7 +46,7 @@ const loginUser = async () => {
         router.push('/dashboard')
 
         } catch (err) {
-            message.value = `Error: ${err?.message || err}` // shouldnt do this in production its bad to leak errors
+            message.value = `Login failed: wrong credentials or server error.`
     }
 }
 </script>
@@ -63,7 +63,15 @@ const loginUser = async () => {
                 <label for="Password">Password:</label>
                 <input id="Password" type="password" v-model="Password" required />
             </div>
-            <button type="submit">Login</button>
+            <div class="button-center">
+                <button type="submit">Login</button>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="register-text">
+                Don’t have an account?
+                <a href="/register" class="register-link">Register here</a>
+                </p>
+            </div>
         </form>
         <div v-if="message">{{ message }}</div>
     </div>

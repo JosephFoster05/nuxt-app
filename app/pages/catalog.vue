@@ -53,7 +53,6 @@ const distribution_centers = {
 const selectedCenters = ref({} as Record<string | number, string | null>);
 // track which donation items have been added to inventory
 const addedInventory = ref(new Set<number>());
-// optional feedback message per item
 const itemMessages = ref({} as Record<string | number, string>);
 
 onMounted(() => {
@@ -187,3 +186,8 @@ async function addToInventory(item: any) {
   transition: box-shadow 220ms ease, transform 120ms ease;
 }
 </style>
+
+<!-- Note for Andy -->
+<!-- Inventory wouldn't send distribution center information -->
+ <!-- Inventory bug where a non login user to add inventory-->
+  <!-- Deleting inventory items should be restricted to Staff Members -->

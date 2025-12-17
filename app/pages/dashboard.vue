@@ -1,5 +1,5 @@
-<script setup>
-import { onMounted, computed } from "vue";
+<script setup lang="ts">
+import { onMounted, computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import useAuth from "../../composables/useAuth";
 import { useDonations } from "../../composables/useDonations";
@@ -28,6 +28,71 @@ const doLogout = async () => {
   await logout();
   router.push("/login");
 };
+<<<<<<< HEAD
+=======
+
+// request deletion of user data stuff, reused code from users.vue
+const showRequestDelete = ref(false);
+const requestPassword = ref("");
+const requestDeleting = ref(false);
+const requestDeleteError = ref("");
+
+function openRequestDelete() {
+  requestPassword.value = "";
+  requestDeleteError.value = "";
+  showRequestDelete.value = true;
+}
+
+function closeRequestDelete() {
+  showRequestDelete.value = false;
+  requestPassword.value = "";
+  requestDeleteError.value = "";
+}
+
+async function submitRequestDelete() {
+  requestDeleteError.value = "";
+  if (!user?.value?.Email) {
+    requestDeleteError.value = 'User email not available';
+    return;
+  }
+  if (!requestPassword.value) {
+    requestDeleteError.value = 'Please enter your password.';
+    return;
+  }
+
+  requestDeleting.value = true;
+  try {
+    const loginRes = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Email: user.value.Email, Password: requestPassword.value })
+    });
+    if (!loginRes.ok) {
+      const txt = await loginRes.text();
+      throw new Error(txt || loginRes.statusText || 'Invalid password');
+    }
+
+    const delRes = await fetch('/api/users', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Email: user.value.Email })
+    });
+    if (!delRes.ok) {
+      const txt = await delRes.text();
+      throw new Error(txt || delRes.statusText || 'Failed to delete');
+    }
+
+    await logout();
+    closeRequestDelete();
+    router.push('/');
+  } catch (err: any) {
+    requestDeleteError.value = String(err?.message || err);
+  } finally {
+    requestDeleting.value = false;
+  }
+}
+
+>>>>>>> a6da9f904bf5eb6ac0dcec19bec28ad1af4af0e4
 </script>
 
 <template>
@@ -109,4 +174,88 @@ const doLogout = async () => {
       </table>
     </section>
   </div>
+
+  <div>
+    <h2>Account Actions</h2>
+    <button @click="doLogout">Logout</button>
+    <button @click="router.push('/donate')">Make a Donation</button>
+    <button @click="router.push('/catalog')">View Catalog</button>
+    <button @click="router.push('/inventory')">View Inventory</button>
+    <button class="delete-data" @click="openRequestDelete">
+      Request deletion of data
+    </button>
+  </div>
+
+  <!-- Request deletion modal -->
+  <div v-if="showRequestDelete" class="modal-overlay">
+    <div class="modal">
+      <h3>Request data deletion</h3>
+      <p>
+        This will permanently delete your account and associated data. Enter
+        your password to confirm.
+      </p>
+      <label>
+        Password
+        <input
+          type="password"
+          v-model="requestPassword"
+          :disabled="requestDeleting"
+        />
+      </label>
+      <div class="modal-actions">
+        <button @click="closeRequestDelete" :disabled="requestDeleting">
+          Cancel
+        </button>
+        <button @click="submitRequestDelete" :disabled="requestDeleting">
+          {{ requestDeleting ? "Deleting..." : "Delete my data" }}
+        </button>
+      </div>
+      <div v-if="requestDeleteError" class="error">
+        Failed to delete data, is the password correct?
+      </div>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  width: 92%;
+  max-width: 420px;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+.modal input,
+.modal select,
+.modal textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.error {
+  color: #b00020;
+  margin-top: 8px;
+}
+</style>

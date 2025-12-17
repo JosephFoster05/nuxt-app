@@ -77,6 +77,23 @@ header h2 a {
     transition: color 0.3s ease;
 }
 
+.register-text {
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.register-link {
+    color: rgb(0, 162, 255);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+
 header h2 a:hover {
     color: #4a4a4a;
 }
@@ -256,6 +273,11 @@ button {
     width: 100%;
 }
 
+.button-center {
+    display: flex;
+    justify-content: center;
+}
+
 button[type="submit"]:hover,
 button:hover {
     background: #1a1715;
@@ -323,6 +345,8 @@ img {
     text-align: center;
     margin: 2rem 0;
 }
+
+
 
 .caption {
     margin-top: 0.75rem;
