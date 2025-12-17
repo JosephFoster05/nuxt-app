@@ -46,7 +46,7 @@ const loginUser = async () => {
         router.push('/dashboard')
 
         } catch (err) {
-            message.value = `Error: ${err?.message || err}` // shouldnt do this in production its bad to leak errors
+            message.value = `Login failed: wrong credentials or server error.`
     }
 }
 </script>
