@@ -111,7 +111,10 @@ const donationsSubmit = async () => {
 <template>
   <div>
     <h2>Donate Page</h2>
-    <p>This is the donate page. More features coming soon!</p>
+    <p>
+      By submitting a donation you confirm that all of the information provided
+      is professional and free from harmful media of any sort.!
+    </p>
 
     <form @submit.prevent="donationsSubmit()">
       <div>
