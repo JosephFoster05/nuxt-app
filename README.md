@@ -1,3 +1,17 @@
+## Tech Stack
+
+### Frontend
+- **Nuxt 4** — Application framework
+- **Vue 3** — UI component system
+- **Chart.js** + **vue-chartjs** — Data visualization
+- **Axios** — HTTP client for API communication
+
+### Backend
+- **Nuxt Nitro Server** — Server-side runtime
+- **SQLite** *(sqlite3 / better-sqlite3)* — Lightweight relational database
+- **bcryptjs** — Password hashing
+- **jsonwebtoken (JWT)** — Authentication & authorization
+
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
