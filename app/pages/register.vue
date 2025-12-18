@@ -85,6 +85,11 @@ function confirmAndGoHome() {
   <div class="form-actions">
     <button type="submit">Register</button>
   </div>
+  <div class="auth-switch">
+  Already have an account?
+  <NuxtLink to="/login">Login here</NuxtLink>
+</div>
+
 </form>
 
     <div v-if="message">{{ message }}</div>
@@ -107,6 +112,24 @@ function confirmAndGoHome() {
 </template>
 
 <style scoped>
+
+.auth-switch {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-switch a {
+  margin-left: 4px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
 .form-actions {
   display: flex;
   justify-content: center;
