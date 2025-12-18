@@ -198,8 +198,3 @@ async function addToInventory(item: any) {
   transition: box-shadow 220ms ease, transform 120ms ease;
 }
 </style>
-
-<!-- Note for Andy -->
-<!-- Inventory wouldn't send distribution center information -->
- <!-- Inventory bug where a non login user to add inventory-->
-  <!-- Deleting inventory items should be restricted to Staff Members -->
