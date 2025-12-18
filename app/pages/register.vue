@@ -62,28 +62,31 @@ function confirmAndGoHome() {
   <div>
     <h2>Add New User</h2>
     <form @submit.prevent="addUser">
-      <div>
-        <label for="First_Name">First Name:</label>
-        <input type="text" id="First_Name" v-model="First_Name" required />
-      </div>
-      <div>
-        <label for="Last_Name">Last Name:</label>
-        <input type="text" id="Last_Name" v-model="Last_Name" required />
-      </div>
-      <div>
-        <label for="Email">Email:</label>
-        <input type="email" id="Email" v-model="Email" required />
-      </div>
-      <div>
-        <label for="Password">Password:</label>
-        <input type="password" id="Password" v-model="Password" required />
-      </div>
-      <div>
-        <label for="Phone">Phone:</label>
-        <input type="tel" id="Phone" v-model="Phone" required />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+  <div>
+    <label for="First_Name">First Name:</label>
+    <input type="text" id="First_Name" v-model="First_Name" required />
+  </div>
+  <div>
+    <label for="Last_Name">Last Name:</label>
+    <input type="text" id="Last_Name" v-model="Last_Name" required />
+  </div>
+  <div>
+    <label for="Email">Email:</label>
+    <input type="email" id="Email" v-model="Email" required />
+  </div>
+  <div>
+    <label for="Password">Password:</label>
+    <input type="password" id="Password" v-model="Password" required />
+  </div>
+  <div>
+    <label for="Phone">Phone:</label>
+    <input type="tel" id="Phone" v-model="Phone" required />
+  </div>
+  <div class="form-actions">
+    <button type="submit">Register</button>
+  </div>
+</form>
+
     <div v-if="message">{{ message }}</div>
 
     <transition name="fade">
@@ -104,6 +107,12 @@ function confirmAndGoHome() {
 </template>
 
 <style scoped>
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;
