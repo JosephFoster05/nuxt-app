@@ -180,10 +180,19 @@ async function addToInventory(item: any) {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
+
 .inventory-actions select {
-  padding: 0.25rem;
+  padding: 0.35rem;
+  min-width: 160px;
 }
+
+.inventory-actions label {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
 .inventory-actions button {
   padding: 0.35rem 0.6rem;
 }
