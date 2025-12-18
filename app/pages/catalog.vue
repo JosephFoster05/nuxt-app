@@ -178,10 +178,11 @@ async function addToInventory(item: any) {
 .inventory-actions {
   margin-top: 0.5rem;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 0.5rem;
 }
+
 
 .inventory-actions select {
   padding: 0.35rem;
