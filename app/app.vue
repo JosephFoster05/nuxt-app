@@ -114,7 +114,9 @@ onMounted(() => {
           <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
           <NuxtLink to="/catalog">Catalog</NuxtLink>
           <NuxtLink to="/inventory">Inventory</NuxtLink>
-          <button v-if="user" @click="handleLogout()">Logout</button>
+          <NuxtLink v-if="user" to="#" @click.prevent="handleLogout">
+            Logout
+          </NuxtLink>
         </div>
       </div>
     </header>
@@ -139,6 +141,22 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+#hamburgerLinks button {
+  background: #f2f2f2; 
+  border: none;
+  padding: 8px 14px;        
+  border-radius: 8px;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+#hamburgerLinks button:hover {
+  background: #e6e6e6;
+}
+
 .app-toast {
   position: fixed;
   top: 16px;
