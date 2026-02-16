@@ -62,28 +62,36 @@ function confirmAndGoHome() {
   <div>
     <h2>Add New User</h2>
     <form @submit.prevent="addUser">
-      <div>
-        <label for="First_Name">First Name:</label>
-        <input type="text" id="First_Name" v-model="First_Name" required />
-      </div>
-      <div>
-        <label for="Last_Name">Last Name:</label>
-        <input type="text" id="Last_Name" v-model="Last_Name" required />
-      </div>
-      <div>
-        <label for="Email">Email:</label>
-        <input type="email" id="Email" v-model="Email" required />
-      </div>
-      <div>
-        <label for="Password">Password:</label>
-        <input type="password" id="Password" v-model="Password" required />
-      </div>
-      <div>
-        <label for="Phone">Phone:</label>
-        <input type="tel" id="Phone" v-model="Phone" required />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+  <div>
+    <label for="First_Name">First Name:</label>
+    <input type="text" id="First_Name" v-model="First_Name" required />
+  </div>
+  <div>
+    <label for="Last_Name">Last Name:</label>
+    <input type="text" id="Last_Name" v-model="Last_Name" required />
+  </div>
+  <div>
+    <label for="Email">Email:</label>
+    <input type="email" id="Email" v-model="Email" required />
+  </div>
+  <div>
+    <label for="Password">Password:</label>
+    <input type="password" id="Password" v-model="Password" required />
+  </div>
+  <div>
+    <label for="Phone">Phone:</label>
+    <input type="tel" id="Phone" v-model="Phone" required />
+  </div>
+  <div class="form-actions">
+    <button type="submit">Register</button>
+  </div>
+  <div class="auth-switch">
+  Already have an account?
+  <NuxtLink to="/login">Login here</NuxtLink>
+</div>
+
+</form>
+
     <div v-if="message">{{ message }}</div>
 
     <transition name="fade">
@@ -104,6 +112,30 @@ function confirmAndGoHome() {
 </template>
 
 <style scoped>
+
+.auth-switch {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-switch a {
+  margin-left: 4px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;

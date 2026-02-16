@@ -174,10 +174,6 @@ async function submitRequestDelete() {
 
   <div>
     <h2>Account Actions</h2>
-    <button @click="doLogout">Logout</button>
-    <button @click="router.push('/donate')">Make a Donation</button>
-    <button @click="router.push('/catalog')">View Catalog</button>
-    <button @click="router.push('/inventory')">View Inventory</button>
     <button class="delete-data" @click="openRequestDelete">
       Request deletion of data
     </button>

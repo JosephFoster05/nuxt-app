@@ -22,8 +22,6 @@ useHead({
 
 import useAuth from "../composables/useAuth";
 
-
-
 const { user, fetchUserData, logout, error } = useAuth();
 const router = useRouter();
 const {
@@ -80,7 +78,8 @@ onMounted(() => {
       const obj = JSON.parse(raw);
       toast.value = obj?.message || String(obj);
       sessionStorage.removeItem("toast");
-      setTimeout(() => (toast.value = null), 3500);
+      // changed to 4 seconds to account for slower machines.
+      setTimeout(() => (toast.value = null), 4000);
     }
   } catch (_) {}
   fetchDonations();
@@ -107,13 +106,17 @@ onMounted(() => {
           <NuxtLink v-if="isAdmin" to="/admin/admin-dashboard"
             >Admin Dashboard</NuxtLink
           >
-          <NuxtLink v-if="isStaff" to="/staff/staff-dashboard">Staff Dashboard</NuxtLink>
+          <NuxtLink v-if="isStaff" to="/staff/staff-dashboard"
+            >Staff Dashboard</NuxtLink
+          >
           <NuxtLink v-if="!user" to="/login">Login</NuxtLink>
           <NuxtLink v-if="user" to="/donate">Donate</NuxtLink>
           <NuxtLink v-if="user" to="/dashboard">Dashboard</NuxtLink>
           <NuxtLink to="/catalog">Catalog</NuxtLink>
           <NuxtLink to="/inventory">Inventory</NuxtLink>
-          <button v-if="user" @click="handleLogout()">Logout</button>
+          <NuxtLink v-if="user" to="#" @click.prevent="handleLogout">
+            Logout
+          </NuxtLink>
         </div>
       </div>
     </header>
@@ -138,6 +141,22 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+#hamburgerLinks button {
+  background: #f2f2f2; 
+  border: none;
+  padding: 8px 14px;        
+  border-radius: 8px;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+#hamburgerLinks button:hover {
+  background: #e6e6e6;
+}
+
 .app-toast {
   position: fixed;
   top: 16px;

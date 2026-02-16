@@ -178,12 +178,22 @@ async function addToInventory(item: any) {
 .inventory-actions {
   margin-top: 0.5rem;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
 }
+
+
 .inventory-actions select {
-  padding: 0.25rem;
+  padding: 0.35rem;
+  min-width: 160px;
 }
+
+.inventory-actions label {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
 .inventory-actions button {
   padding: 0.35rem 0.6rem;
 }
@@ -198,8 +208,3 @@ async function addToInventory(item: any) {
   transition: box-shadow 220ms ease, transform 120ms ease;
 }
 </style>
-
-<!-- Note for Andy -->
-<!-- Inventory wouldn't send distribution center information -->
- <!-- Inventory bug where a non login user to add inventory-->
-  <!-- Deleting inventory items should be restricted to Staff Members -->
