@@ -48,7 +48,6 @@ definePageMeta({
     <p>Total Donations Received: {{ donations?.length || 0 }}</p>
     <p>
       <NuxtLink to="/dashboard">Back to User Dashboard</NuxtLink>
-      <NuxtLink to="/staff/analytics">Go to Staff Analytics</NuxtLink>
     </p>
   </div>
 </template>

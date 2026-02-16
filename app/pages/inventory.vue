@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
+import useAuth from '../../composables/useAuth'
 import { useRouter } from 'vue-router'
 
 type InventoryRow = {
@@ -34,6 +35,14 @@ const grouped = computed(() => {
 	return out
 })
 
+const { user, fetchUserData } = useAuth()
+
+// allow removal for admin/staff only
+const canRemoveFromInventory = computed(() => {
+	const role = (user?.value?.role ?? user?.value?.Role ?? '').toString().toLowerCase()
+	return role === 'staff' || role === 'admin'
+})
+
 async function fetchInventory() {
 	loading.value = true
 	error.value = null
@@ -48,9 +57,28 @@ async function fetchInventory() {
 	}
 }
 
+
+
 onMounted(() => {
 	fetchInventory()
+	// attempt to fetch current user for role checks; if not logged in that's okay
+	fetchUserData().catch(() => {})
 })
+
+async function removeFromInventory(inventoryId: number) {
+	if (!confirm('Remove this inventory item? This action cannot be undone.')) return
+	try {
+		const res = await fetch('/api/inventory', {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ inventory_id: inventoryId }),
+		})
+		if (!res.ok) throw new Error(await res.text())
+		await fetchInventory()
+	} catch (err: any) {
+		alert('Failed to remove inventory' )
+	}
+}
 
 function goToCatalog(itemId: number) {
 	router.push({ path: '/catalog', query: { highlight: String(itemId) } })
@@ -72,13 +100,17 @@ function goToCatalog(itemId: number) {
 					<div
 						v-for="r in items"
 						:key="r.Inventory_ID"
-						class="catalog-card clickable"
-						@click="goToCatalog(r.Item_ID)"
+						class="catalog-card"
 					>
-						<h3>Inventory #{{ r.Inventory_ID }}</h3>
-						<p>Item ID: {{ r.Item_ID }}</p>
-						<p>Availability: {{ r.availablilty }}</p>
-						<p>Location: {{ r.Location }}</p>
+						<div class="card-main clickable" @click="goToCatalog(r.Item_ID)">
+						  <h3>Inventory #{{ r.Inventory_ID }}</h3>
+						  <p>Item ID: {{ r.Item_ID }}</p>
+						  <p>Availability: available</p>
+						  <p>Location: {{ r.Location }}</p>
+						</div>
+						<div class="card-actions">
+						  <button v-if="canRemoveFromInventory" @click.stop.prevent="removeFromInventory(r.Inventory_ID)">Remove</button>
+						</div>
 					</div>
 				</div>
 			</div>
